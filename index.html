@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Гарц | Гадаадын их сургуульд өргөдөл өгөх хөтөч</title>
+<meta name="description" content="АНУ, Хятад, Солонгос, Японы их сургуульд өргөдөл өгөх алхам алхмаар заавар, эцсийн хугацаа, элсэлтийн албаны имэйл, шалгалтын шаардлага. Ахлах ангийн сурагч Нанжинсувдын үеийнхэндээ зориулж бүтээсэн төсөл.">
+<meta name="author" content="Nanjinsuvd">
+<meta property="og:title" content="Гарц | Гадаадын их сургуульд өргөдөл өгөх хөтөч">
+<meta property="og:description" content="Алхам алхмаар заавар, 21 сургуулийн эцсийн хугацаа, имэйл, шалгалтын шаардлага нэг дор.">
+<meta name="theme-color" content="#0E2F63">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@500;700;800&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* өнгө: тэнгэр шиг цайвар дэвсгэр, гүн хөх самбар, соёмбын алтлаг шар */
+:root{
+  --sky:#EDF1F6;
+  --paper:#FFFFFF;
+  --ink:#14243F;
+  --muted:#56677F;
+  --line:#D3DCE7;
+  --gate:#0E2F63;
+  --gate-2:#163F7C;
+  --gate-3:#0A2550;
+  --gold:#F3C33B;
+  --red:#C4272F;
+  --green:#1C7A52;
+  --focus:#2A63C9;
+
+  --f-display:"Geologica", "Golos Text", system-ui, sans-serif;
+  --f-body:"Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --r-m:14px;
+  --wrap:1180px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none !important}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;background:var(--sky);color:var(--ink);
+  font-family:var(--f-body);font-size:17px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+img,svg{display:block}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+h1,h2,h3,h4{font-family:var(--f-display);margin:0;line-height:1.15;letter-spacing:-.01em}
+p{margin:0}
+
+/* нисэх буудлын самбар шиг хавтан. сайт даяар энэ ганц хэв маягийг давтана */
+.flap{
+  position:relative;display:inline-grid;place-items:center;
+  min-width:1.45em;height:1.75em;padding:0 .18em;
+  background:var(--gate-3);color:var(--gold);
+  font-family:var(--f-display);font-weight:700;line-height:1;
+  border-radius:4px;font-variant-numeric:tabular-nums;
+}
+.flap::after{
+  content:"";position:absolute;left:0;right:0;top:50%;height:1px;
+  background:rgba(0,0,0,.45);box-shadow:0 1px 0 rgba(255,255,255,.06);
+}
+.flaps{display:inline-flex;gap:3px}
+
+/* ---- толгой хэсэг ---- */
+.site-head{position:sticky;top:0;z-index:20;background:rgba(237,241,246,.94);backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid transparent;transition:border-color .2s}
+.site-head.is-scrolled{border-bottom-color:var(--line)}
+.head-row{position:relative;display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand .flap{font-size:18px}
+.brand-name{font-family:var(--f-display);font-weight:800;font-size:22px;letter-spacing:-.02em}
+.brand-sub{font-size:14px;color:var(--muted);border-left:1px solid var(--line);padding-left:10px;margin-left:2px}
+.nav{display:flex;gap:2px}
+.nav a{text-decoration:none;font-weight:500;font-size:15px;padding:8px 12px;border-radius:999px}
+.nav a:hover{background:#DFE6EF}
+.menu-btn{display:none;align-items:center;gap:8px;height:40px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--paper);font-weight:600;font-size:15px;cursor:pointer}
+.menu-btn svg{width:18px;height:18px}
+@media (max-width:980px){.brand-sub{display:none}}
+@media (max-width:760px){
+  .menu-btn{display:inline-flex}
+  .nav{display:none;position:absolute;right:16px;top:58px;flex-direction:column;gap:2px;min-width:220px;padding:8px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);box-shadow:0 16px 32px -16px rgba(20,36,63,.35)}
+  .nav.is-open{display:flex}
+  .nav a{padding:12px 14px;border-radius:8px;font-size:16px}
+}
+
+/* ---- нүүр ---- */
+.hero{padding:48px 0 56px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:48px;align-items:start}
+.hero h1{font-size:clamp(30px,4.4vw,50px);font-weight:800;line-height:1.08;letter-spacing:-.025em;max-width:13em}
+.lede{margin-top:20px;font-size:19px;color:var(--muted);max-width:34em}
+.byline{margin-top:14px;font-size:15px;color:var(--muted)}
+.byline a{color:var(--gate);font-weight:600}
+.gates-label{margin-top:32px;font-size:15px;font-weight:600}
+.gates{margin-top:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.gate{
+  display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:14px;align-items:center;
+  text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);
+  padding:14px 16px;cursor:pointer;transition:border-color .15s;
+}
+.gate:hover{border-color:var(--gate)}
+.gate[aria-pressed="true"]{border-color:var(--gate);box-shadow:inset 0 0 0 1px var(--gate)}
+.gate .flaps{grid-row:1/3;font-size:20px}
+.gate-name{font-family:var(--f-display);font-weight:700;font-size:19px}
+.gate-meta{font-size:14px;color:var(--muted)}
+
+/* ---- ойрын хугацааны самбар ---- */
+.board{background:var(--gate);color:#fff;border-radius:var(--r-m);padding:20px 20px 14px;box-shadow:0 20px 40px -24px rgba(14,47,99,.55)}
+.board-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.14)}
+.board-title{font-size:22px;font-weight:700;color:#fff}
+.board-today{font-size:14px;color:#A9BEDD}
+.board-cols,.board-row{display:grid;grid-template-columns:3.6em minmax(0,1fr) 7.4em 7.6em;gap:12px;align-items:center}
+.board-cols{padding:10px 4px 6px;font-size:13px;color:#A9BEDD}
+.board-cols span:last-child,.board-row .b-days{justify-self:end}
+.board-list{list-style:none;margin:0;padding:0}
+.board-row{
+  width:100%;border:0;background:none;color:inherit;text-align:left;cursor:pointer;
+  padding:10px 4px;border-top:1px solid rgba(255,255,255,.08);border-radius:6px;
+}
+.board-row:hover{background:var(--gate-2)}
+.board-row:focus-visible{outline-color:var(--gold)}
+.board-row .flaps{font-size:15px}
+.b-name{font-weight:600;font-size:16px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.b-round{display:block;font-size:13px;color:#A9BEDD;font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.b-date{font-family:var(--f-display);font-weight:500;font-size:15px;font-variant-numeric:tabular-nums;color:#DCE6F4}
+.b-days{display:flex;align-items:center;gap:6px;font-size:13px;color:#A9BEDD}
+.b-days .flaps{font-size:16px}
+.board-row.is-urgent .b-name::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#FF5A5F;margin-right:8px;vertical-align:1px}
+.board-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:10px;padding-top:12px;border-top:1px solid rgba(255,255,255,.14);font-size:13px;color:#A9BEDD}
+.board-foot a{color:var(--gold);font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap;margin-left:auto}
+.board-foot a:hover{text-decoration:underline}
+.board-empty{padding:18px 4px;color:#A9BEDD}
+
+@media (max-width:1000px){
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  .hero h1{max-width:16em}
+}
+@media (max-width:560px){
+  .hero{padding:28px 0 40px}
+  .lede{font-size:17px}
+  .gates{grid-template-columns:1fr 1fr;gap:8px}
+  .gate{grid-template-columns:1fr;row-gap:6px;padding:12px}
+  .gate .flaps{grid-row:auto;font-size:16px}
+  .gate-name{font-size:17px}
+  .board{padding:16px 12px 10px}
+  .board-head{flex-wrap:wrap;row-gap:2px;padding:0 4px 12px}
+  .board-title{font-size:20px}
+  .board-cols{display:none}
+  .board-row{grid-template-columns:3.2em minmax(0,1fr) auto;gap:10px}
+  .b-date{display:none}
+  .b-days{gap:4px}
+}
+
+/* ---- хэсэг бүрийн гарчиг ---- */
+.section{padding:64px 0;border-top:1px solid var(--line);scroll-margin-top:56px}
+.section-head{max-width:46em}
+.section-head h2{font-size:clamp(26px,3.2vw,36px);font-weight:800;letter-spacing:-.02em}
+.section-head p{margin-top:12px;color:var(--muted)}
+
+/* ---- заавар ---- */
+.tabs{display:flex;gap:8px;margin-top:28px;overflow-x:auto;padding:2px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  display:inline-flex;align-items:center;gap:10px;white-space:nowrap;
+  background:transparent;border:1px solid var(--line);border-radius:999px;padding:6px 16px 6px 6px;
+  font-weight:600;font-size:16px;cursor:pointer;
+}
+.tab .flaps{font-size:13px}
+.tab:hover{border-color:var(--gate)}
+.tab[aria-selected="true"]{background:var(--gate);border-color:var(--gate);color:#fff}
+
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:24px 0 0;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m)}
+.facts div{padding:16px 18px;border-left:1px solid var(--line)}
+.facts div:first-child{border-left:0}
+.facts dt{font-size:14px;color:var(--muted)}
+.facts dd{margin:4px 0 0;font-weight:600;line-height:1.35}
+@media (max-width:860px){
+  .facts{grid-template-columns:1fr 1fr}
+  .facts div:nth-child(3){border-left:0}
+  .facts div:nth-child(n+3){border-top:1px solid var(--line)}
+}
+
+.guide-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:40px;margin-top:36px;align-items:start}
+@media (max-width:960px){.guide-grid{grid-template-columns:1fr}}
+
+.steps{list-style:none;margin:0;padding:0}
+.step{position:relative;display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:18px;padding-bottom:28px}
+.step::before{content:"";position:absolute;left:21px;top:44px;bottom:0;width:2px;background:var(--line)}
+.step:last-child{padding-bottom:0}
+.step:last-child::before{display:none}
+.step-num{
+  width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+  background:var(--paper);border:2px solid var(--gate);color:var(--gate);
+  font-family:var(--f-display);font-weight:700;font-size:17px;
+}
+.step h3{font-size:20px;font-weight:700;padding-top:9px}
+.step-when{display:inline-block;margin-top:6px;font-size:14px;font-weight:600;color:var(--gate);background:#DCE5F2;border-radius:999px;padding:2px 10px}
+.step p{margin-top:8px;max-width:38em}
+
+/* жижиг тэмдэглэл: зөвлөгөө (хөх), анхааруулга (улаан) */
+.note{margin-top:12px;max-width:38em;padding:12px 14px;border-radius:10px;font-size:15.5px;line-height:1.5;border-left:4px solid}
+.note b{display:block;font-family:var(--f-display);font-size:14px;margin-bottom:2px}
+.note-tip{background:#E3EBF6;border-color:var(--gate)}
+.note-tip b{color:var(--gate)}
+.note-warn{background:#FBECEC;border-color:var(--red)}
+.note-warn b{color:var(--red)}
+
+.side{display:grid;gap:16px;position:sticky;top:84px}
+@media (max-width:960px){.side{position:static}}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);padding:20px}
+.panel h3{font-size:18px;font-weight:700}
+.check-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.check-count{font-size:14px;color:var(--muted);white-space:nowrap}
+.meter{height:6px;background:#E4EAF2;border-radius:999px;margin-top:12px;overflow:hidden}
+.meter span{display:block;height:100%;width:0;background:var(--green);border-radius:inherit;transition:width .25s}
+.checklist{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:2px}
+.checklist label{display:flex;gap:12px;align-items:flex-start;padding:7px 4px;border-radius:6px;cursor:pointer;line-height:1.4}
+.checklist label:hover{background:#F2F5F9}
+.checklist input{appearance:none;flex:none;width:20px;height:20px;margin:1px 0 0;border:2px solid #9AABC2;border-radius:5px;background:#fff;display:grid;place-items:center;cursor:pointer}
+.checklist input:checked{background:var(--green);border-color:var(--green)}
+.checklist input:checked::after{content:"";width:10px;height:5px;border:2px solid #fff;border-top:0;border-right:0;transform:translateY(-1px) rotate(-45deg)}
+.checklist input:checked + span{color:var(--muted);text-decoration:line-through;text-decoration-color:#9AABC2}
+.reset{margin-top:10px;background:none;border:0;padding:4px 0;color:var(--muted);font-size:14px;text-decoration:underline;cursor:pointer}
+.panel-tips{background:#F5F8FC}
+.tips{margin:12px 0 0;padding-left:20px;display:grid;gap:10px}
+.tips li::marker{color:var(--gate)}
+.links{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px}
+.links a{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--gate)}
+.links a svg{width:14px;height:14px;flex:none}
+
+/* ---- сургуулиуд: хайлт, шүүлтүүр ---- */
+.toolbar{margin-top:28px;display:grid;gap:14px}
+.search{position:relative;display:block;max-width:560px}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted)}
+.search input{width:100%;height:48px;border:1px solid var(--line);border-radius:999px;background:var(--paper);padding:0 18px 0 42px;font-size:16px}
+.search input:focus{outline:none;border-color:var(--focus);box-shadow:0 0 0 3px rgba(42,99,201,.2)}
+.tool-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:7px 14px;font-weight:600;font-size:15px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.chip:hover{border-color:var(--gate)}
+.chip[aria-pressed="true"]{background:var(--gate);border-color:var(--gate);color:#fff}
+.chip small{font-size:13px;font-weight:500;opacity:.7}
+.tool-right{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.switch{display:inline-flex;align-items:center;gap:8px;font-size:15px;cursor:pointer;user-select:none}
+.switch input{appearance:none;width:38px;height:22px;border-radius:999px;background:#C5D0DE;position:relative;cursor:pointer;transition:background .15s;margin:0}
+.switch input::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s}
+.switch input:checked{background:var(--green)}
+.switch input:checked::after{transform:translateX(16px)}
+.select{height:38px;border:1px solid var(--line);border-radius:999px;background:var(--paper);padding:0 14px;font-size:15px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;background:var(--paper);padding:3px}
+.seg button{border:0;background:none;border-radius:999px;padding:5px 12px;font-size:14px;font-weight:600;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.result-line{margin-top:18px;font-size:15px;color:var(--muted)}
+.result-line strong{color:var(--ink)}
+
+/* ---- сургуулиуд: тасалбар хэлбэрийн карт ---- */
+.tickets{margin-top:16px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:1080px){.tickets{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:680px){.tickets{grid-template-columns:1fr}}
+.ticket{
+  --notch:var(--sky);
+  display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);
+  scroll-margin-top:96px;
+}
+.ticket.is-flash{animation:flash 1.6s ease-out}
+@keyframes flash{0%{box-shadow:0 0 0 4px var(--gold)}100%{box-shadow:0 0 0 0 rgba(243,195,59,0)}}
+@media (prefers-reduced-motion:reduce){.ticket.is-flash{animation:none;box-shadow:0 0 0 3px var(--gold)}}
+.t-main{padding:20px 20px 18px;flex:1;display:flex;flex-direction:column}
+.t-top{display:flex;gap:12px;align-items:flex-start}
+.t-top .flaps{font-size:14px;margin-top:3px}
+.t-name{font-size:19px;font-weight:700;line-height:1.2}
+.t-where{font-size:14px;color:var(--muted);margin-top:3px}
+.t-where span[lang]{margin-left:6px}
+.t-intro{margin-top:14px;font-size:15.5px;line-height:1.5}
+.t-mine{margin-top:12px;padding:10px 12px;border-radius:10px;background:#FFF6DA;font-size:14.5px;line-height:1.45}
+.t-mine b{font-family:var(--f-display);margin-right:4px}
+.t-aid{margin-top:12px;display:flex;gap:8px;align-items:flex-start;font-size:14.5px;font-weight:600;color:var(--green)}
+.t-aid svg{flex:none;width:16px;height:16px;margin-top:2px}
+.t-tests{margin:16px 0 0;display:grid;gap:8px}
+.t-tests div{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:10px;font-size:14.5px;line-height:1.4}
+.t-tests dt{color:var(--muted)}
+.t-tests dd{margin:0;font-weight:500}
+
+/* тасалбарын цоолтуур шугам */
+.t-perf{position:relative;height:0;border-top:2px dashed var(--line);margin:0 18px}
+.t-perf::before,.t-perf::after{
+  content:"";position:absolute;top:-11px;width:20px;height:20px;border-radius:50%;
+  background:var(--notch);border:1px solid var(--line);
+}
+.t-perf::before{left:-30px;clip-path:inset(0 0 0 50%)}
+.t-perf::after{right:-30px;clip-path:inset(0 50% 0 0)}
+
+.t-stub{padding:16px 20px 20px}
+.t-stub h4{font-family:var(--f-body);font-size:14px;font-weight:600;color:var(--muted)}
+.dl{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+.dl li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:baseline}
+.dl-label{font-size:14.5px;line-height:1.35}
+.dl-date{font-family:var(--f-display);font-weight:600;font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dl-status{grid-column:1/-1;font-size:13px;font-weight:600}
+.dl li.closed .dl-label,.dl li.closed .dl-date{color:#8796AA}
+.dl li.closed .dl-date{text-decoration:line-through}
+.st-closed{color:#8796AA}
+.st-soon{color:var(--red)}
+.st-open{color:var(--green)}
+.st-tba,.st-info{color:var(--muted)}
+.est{font-weight:500;color:var(--muted)}
+.t-note{margin-top:10px;font-size:13.5px;color:var(--muted)}
+.t-actions{margin-top:16px;display:grid;gap:10px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 16px;
+  border:0;border-radius:999px;background:var(--gate);color:#fff;font-weight:600;font-size:15px;text-decoration:none;cursor:pointer;
+}
+.btn:hover{background:var(--gate-2)}
+.btn svg{width:15px;height:15px}
+.mail{display:flex;align-items:center;gap:8px;min-width:0;border:1px solid var(--line);border-radius:999px;padding:4px 4px 4px 14px;background:#F7F9FC}
+.mail svg{width:16px;height:16px;flex:none;color:var(--muted)}
+.mail a{flex:1;min-width:0;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-decoration:none}
+.mail a:hover{text-decoration:underline}
+.mail-none{flex:1;font-size:14px;color:var(--muted)}
+.copy{flex:none;background:var(--paper);border:1px solid var(--line);border-radius:999px;height:32px;padding:0 12px;font-size:13px;font-weight:600;cursor:pointer}
+.copy:hover{border-color:var(--gate)}
+.copy.is-done{background:var(--green);border-color:var(--green);color:#fff}
+
+/* ---- сургуулиуд: хүснэгт ---- */
+.table-wrap{margin-top:16px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:900px}
+th,td{text-align:left;vertical-align:top;padding:14px 16px;border-bottom:1px solid var(--line)}
+thead th{font-size:13px;font-weight:600;color:var(--muted);background:#F7F9FC}
+tbody tr:last-child td{border-bottom:0}
+td .tn{font-weight:700;font-family:var(--f-display);font-size:15px}
+td .tl{font-size:13px;color:var(--muted)}
+td a{color:var(--gate);font-weight:600}
+.td-tests{display:grid;gap:4px}
+.td-tests b{font-weight:600;color:var(--muted)}
+
+.empty{margin-top:24px;background:var(--paper);border:1px dashed #AEBBCD;border-radius:var(--r-m);padding:28px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+.empty p{max-width:36em}
+.ghost{border:1px solid var(--gate);background:none;color:var(--gate);border-radius:999px;height:40px;padding:0 16px;font-weight:600;cursor:pointer}
+.ghost:hover{background:#DCE5F2}
+
+/* ---- миний тухай ---- */
+.about-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:48px;align-items:start;margin-top:32px}
+@media (max-width:900px){.about-grid{grid-template-columns:1fr;gap:28px}}
+.pass{--notch:var(--sky);background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);position:sticky;top:88px}
+@media (max-width:900px){.pass{position:static;max-width:460px}}
+.pass-top{background:var(--gate);color:#fff;border-radius:var(--r-m) var(--r-m) 0 0;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.pass-top .flaps{font-size:20px}
+.pass-top span.pass-kind{font-size:14px;color:#A9BEDD}
+.pass-body{padding:18px 20px;display:grid;grid-template-columns:1fr 1fr;gap:16px 20px;margin:0}
+.pass-body div:first-child{grid-column:1/-1}
+.pass-body dt{font-size:13px;color:var(--muted)}
+.pass-body dd{margin:2px 0 0;font-family:var(--f-display);font-weight:700;font-size:17px;line-height:1.25}
+.pass-body div:first-child dd{font-size:22px}
+.pass .t-perf{margin:0 18px}
+.pass-stub{padding:16px 20px 20px;font-size:15px;color:var(--muted)}
+.pass-stub strong{color:var(--ink)}
+.story p{max-width:36em;font-size:18px;line-height:1.65}
+.story p + p{margin-top:18px}
+.story .hello{font-family:var(--f-display);font-weight:700;font-size:24px;line-height:1.3}
+.sign{margin-top:26px;font-family:var(--f-display);font-weight:800;font-size:22px}
+.sign span{display:block;font-family:var(--f-body);font-weight:400;font-size:15px;color:var(--muted);margin-top:2px}
+
+/* ---- холбоо барих ---- */
+.contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;margin-top:32px;align-items:start}
+@media (max-width:900px){.contact-grid{grid-template-columns:1fr;gap:28px}}
+.contact-copy p{max-width:32em}
+.contact-copy p + p{margin-top:14px}
+.socials{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:10px;max-width:380px}
+.socials a{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--paper);text-decoration:none}
+.socials a:hover{border-color:var(--gate)}
+.socials .s-name{font-weight:600}
+.socials .s-handle{color:var(--muted);font-size:15px}
+.socials svg{width:15px;height:15px;color:var(--muted);flex:none}
+.form{display:grid;gap:16px}
+.field{display:grid;gap:6px}
+.field label{font-weight:600;font-size:15px}
+.field small{font-weight:400;color:var(--muted)}
+.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:10px;background:#fff;padding:11px 14px;font-size:16px}
+.field textarea{min-height:140px;resize:vertical;line-height:1.5}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--focus);box-shadow:0 0 0 3px rgba(42,99,201,.2)}
+.field-err{color:var(--red);font-size:14px}
+.form-foot{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.form-hint{font-size:14px;color:var(--muted);max-width:30em}
+.form-status{border-radius:10px;padding:12px 14px;background:#E6F3EC;color:#145C3D;font-size:15px}
+.form-status textarea{margin-top:10px;width:100%;min-height:110px;border:1px solid #B9D9C7;border-radius:8px;padding:10px;font-size:14px;background:#fff}
+
+/* ---- хөл хэсэг ---- */
+.site-foot{border-top:1px solid var(--line);padding:40px 0 32px;font-size:14.5px;color:var(--muted)}
+.foot-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);gap:28px 40px}
+@media (max-width:820px){.foot-grid{grid-template-columns:1fr}}
+.foot-grid h3{font-family:var(--f-body);font-size:14.5px;font-weight:600;color:var(--ink);margin-bottom:8px}
+.foot-grid p + p{margin-top:8px}
+.foot-links{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.foot-links a{text-decoration:none}
+.foot-links a:hover{text-decoration:underline;color:var(--ink)}
+.foot-brand .brand-name{color:var(--ink)}
+.foot-brand p{margin-top:12px;max-width:26em}
+.foot-bottom{margin-top:32px;padding-top:20px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+.made{color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+
+<a class="sr-only" href="#zaavar">Заавар руу шилжих</a>
+
+<header class="site-head" id="top">
+  <div class="wrap head-row">
+    <a class="brand" href="#top" aria-label="Гарц, нүүр хуудас">
+      <span class="flap" aria-hidden="true">Г</span>
+      <span class="brand-name">Гарц</span>
+      <span class="brand-sub">гадаадад суралцах хөтөч</span>
+    </a>
+    <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="nav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Цэс
+    </button>
+    <nav class="nav" id="nav" aria-label="Үндсэн цэс">
+      <a href="#zaavar">Заавар</a>
+      <a href="#surguuli">Сургуулиуд</a>
+      <a href="#about">Миний тухай</a>
+      <a href="#contact">Холбоо барих</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- нүүр -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>АНУ, Хятад, Солонгос, Японы их сургуульд хэрхэн өргөдөл өгөх вэ</h1>
+        <p class="lede" id="lede">Өргөдлөө бэлдэх явцдаа цуглуулсан бүхнээ энд нэгтгэлээ: алхам алхмаар заавар, сургууль бүрийн эцсийн хугацаа, элсэлтийн албаны имэйл, шалгалтын шаардлага.</p>
+        <p class="byline">Ахлах ангийн сурагч Нанжинсувд үеийнхэндээ зориулж бүтээв. <a href="#about">Яагаад?</a></p>
+        <p class="gates-label" id="gates-label">Аль улсад сурмаар байна?</p>
+        <div class="gates" id="gates" role="group" aria-labelledby="gates-label"></div>
+      </div>
+
+      <aside class="board" aria-labelledby="board-title">
+        <div class="board-head">
+          <h2 class="board-title" id="board-title">Ойрын хугацаа</h2>
+          <span class="board-today" id="board-today"></span>
+        </div>
+        <div class="board-cols" aria-hidden="true">
+          <span>Улс</span><span>Сургууль</span><span>Огноо</span><span>Үлдсэн</span>
+        </div>
+        <ol class="board-list" id="board-list"></ol>
+        <div class="board-foot">
+          <span id="board-est">≈ өмнөх жилийн хуваариар тооцсон</span>
+          <a href="#surguuli" id="board-all">Бүх хугацааг харах</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- заавар -->
+  <section class="section" id="zaavar" aria-labelledby="guide-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="guide-title">Өргөдлийн заавар</h2>
+        <p>Улс бүрийн элсэлт өөр өөр замтай. Улсаа сонгоод алхмуудыг дарааллаар нь яваарай, бичиг баримт бэлэн болох бүрт нь чагтлаад яв. Хөх тэмдэглэлүүд бол өөрөө судалж, бэлдэх явцдаа олж мэдсэн миний зөвлөгөө.</p>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Улс сонгох" id="tabs"></div>
+
+      <div id="guide-panel" role="tabpanel" tabindex="0">
+        <dl class="facts" id="facts"></dl>
+        <div class="guide-grid">
+          <ol class="steps" id="steps"></ol>
+          <div class="side">
+            <section class="panel" aria-labelledby="check-title">
+              <div class="check-head">
+                <h3 id="check-title">Бүрдүүлэх бичиг баримт</h3>
+                <span class="check-count" id="check-count" aria-live="polite"></span>
+              </div>
+              <div class="meter" aria-hidden="true"><span id="meter"></span></div>
+              <ul class="checklist" id="checklist"></ul>
+              <button class="reset" type="button" id="check-reset">Тэмдэглэгээг арилгах</button>
+            </section>
+            <section class="panel panel-tips" aria-labelledby="tips-title">
+              <h3 id="tips-title">Миний зөвлөгөө</h3>
+              <ul class="tips" id="tips"></ul>
+            </section>
+            <section class="panel" aria-labelledby="links-title">
+              <h3 id="links-title">Хэрэгтэй холбоос</h3>
+              <ul class="links" id="links"></ul>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- сургуулиуд -->
+  <section class="section" id="surguuli" aria-labelledby="schools-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="schools-title">Их сургуулиуд</h2>
+        <p>Олон улсын оюутан элсүүлдэг, тэтгэлгийн боломж сайтай сургуулиудыг сонгосон. Хугацаа, имэйлийг <span id="checked-date"></span>-нд сургууль бүрийн албан ёсны сайтаас шалгасан ч жил бүр өөрчлөгддөг тул өргөдлөө илгээхээс өмнө нэг дахин шалгаарай.</p>
+      </div>
+
+      <div class="toolbar">
+        <label class="search">
+          <span class="sr-only">Сургууль хайх</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="search" id="q" placeholder="Нэр, хот эсвэл шалгалтаар хайх: SAT, TOPIK, Сөүл…" autocomplete="off">
+        </label>
+        <div class="tool-row">
+          <div class="chips" id="chips" role="group" aria-label="Улсаар шүүх"></div>
+          <div class="tool-right">
+            <label class="switch"><input type="checkbox" id="open-only"> Хаагдаагүй хугацаатай</label>
+            <label><span class="sr-only">Эрэмбэлэх</span>
+              <select class="select" id="sort">
+                <option value="deadline">Хугацаа ойртсоноор</option>
+                <option value="name">Нэрээр</option>
+                <option value="country">Улсаар</option>
+              </select>
+            </label>
+            <div class="seg" role="group" aria-label="Харагдах байдал">
+              <button type="button" data-view="cards" aria-pressed="true">Карт</button>
+              <button type="button" data-view="table" aria-pressed="false">Хүснэгт</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="result-line" id="result-line" aria-live="polite"></p>
+      <div class="tickets" id="tickets"></div>
+      <div class="table-wrap" id="table-wrap" hidden>
+        <table>
+          <caption class="sr-only">Их сургуулиудын харьцуулсан хүснэгт</caption>
+          <thead><tr><th scope="col">Сургууль</th><th scope="col">Дараагийн хугацаа</th><th scope="col">Шалгалт</th><th scope="col">Тэтгэлэг</th><th scope="col">Холбоо барих</th></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <div class="empty" id="empty" hidden>
+        <p>Хайсан зүйлтэй тохирох сургууль олдсонгүй. Өөр үгээр хайгаад үз, эсвэл шүүлтүүрээ арилга.</p>
+        <button class="ghost" type="button" id="clear">Шүүлтүүр арилгах</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- миний тухай -->
+  <section class="section" id="about" aria-labelledby="about-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="about-title">Яагаад би Гарцыг бүтээсэн бэ</h2>
+      </div>
+      <div class="about-grid">
+        <div class="pass" aria-label="Үүсгэн байгуулагчийн танилцуулга">
+          <div class="pass-top">
+            <span class="flaps" aria-hidden="true"><span class="flap">J</span><span class="flap">U</span><span class="flap">N</span><span class="flap">A</span></span>
+            <span class="pass-kind">Гарцыг үүсгэн байгуулагч</span>
+          </div>
+          <dl class="pass-body">
+            <div><dt>Нэр</dt><dd>Нанжинсувд (Juna)</dd></div>
+            <div><dt>Хаанаас</dt><dd>Улаанбаатар</dd></div>
+            <div><dt>Хаашаа</dt><dd>АНУ, 2027 оны намар</dd></div>
+            <div><dt>Одоо</dt><dd>SAT, эссэ</dd></div>
+            <div><dt>Төлөв</dt><dd>Өргөдлөө бэлдэж байна</dd></div>
+          </dl>
+          <div class="t-perf" aria-hidden="true"></div>
+          <p class="pass-stub">Асуух зүйл байвал <a href="#contact"><strong>надад бичээрэй</strong></a>.</p>
+        </div>
+
+        <div class="story">
+          <p class="hello">Сайн уу! Би Нанжинсувд, ойрын хүмүүс маань Жуна гэж дууддаг.</p>
+          <p>Улаанбаатарт амьдардаг ахлах ангийн сурагч. Яг одоо 2027 оны намрын элсэлтэд АНУ-ын их сургуулиудад өргөдлөө бэлдэж байна.</p>
+          <p>Бэлдэж эхлэхэд хамгийн түрүүнд мэдрэгдсэн зүйл бол мэдээлэл хэт тархай байсан явдал. Нэг сургуулийн эцсийн хугацаа, шалгалтын шаардлагыг олох гэж хэд хэдэн сайт ухаж, урт англи PDF уншдаг байлаа. Need-blind, ED, CSS Profile гэх мэт үгсийн утгыг ойлгох гэж ч нэлээн цаг зарцуулсан. Манай сургуульд гадаадын элсэлтийн зөвлөх багш байхгүй болохоор ихэнхийг өөрөө хайж олох хэрэгтэй болсон.</p>
+          <p>Тэгээд бодогдсон юм: надтай адил нөхцөлд байгаа үеийнхэн маань яг энэ замыг дахин дахин туулах ёсгүй. Тиймээс хайж олсон бүхнээ нэг дор цэгцэлж, хэн ч үнэгүй ашиглаж болох газар болгохоор шийдсэн. Гарц ингэж эхэлсэн.</p>
+          <p>Нэг зүйлийг шударгаар хэлье: би мэргэжлийн зөвлөх биш, чамтай адилхан сурагч. Энд байгаа мэдээллийг албан ёсны эх сурвалжаас шалгаж оруулдаг ч сургуулиуд хуваариа жил бүр өөрчилдөг. Тиймээс эндээс эхлээд, өргөдлөө илгээхийн өмнө сургуулийн сайтаас заавал дахин шалгаарай.</p>
+          <p>Хэрэв энэ сайт чамд жаахан ч гэсэн тус болсон бол миний хүссэн зүйл биеллээ. Амжилт хүсье!</p>
+          <p class="sign">Нанжинсувд<span>Гарцыг үүсгэн байгуулагч</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- холбоо барих -->
+  <section class="section" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="contact-title">Надад бичээрэй</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-copy">
+          <p>Өргөдөлтэй холбоотой асуулт, сайт дээр олсон алдаа, эсвэл өөрийн туршлагаа хуваалцмаар байвал бичээрэй. Би ч бас сурагч учраас бүх зүйлийг мэдэхгүй, гэхдээ мэдэх зүйлээ хуваалцаж, мэдэхгүй бол хамтдаа хайя.</p>
+          <p>Хамгийн хурдан хариулдаг газар маань Instagram.</p>
+          <ul class="socials" id="socials"></ul>
+        </div>
+
+        <form class="panel form" id="contact-form" novalidate>
+          <div class="field">
+            <label for="f-name">Нэр <small>(заавал биш)</small></label>
+            <input id="f-name" name="name" autocomplete="given-name">
+          </div>
+          <div class="field">
+            <label for="f-country">Аль улсын талаар асуух вэ?</label>
+            <select id="f-country" name="country">
+              <option>АНУ</option><option>Хятад</option><option>Солонгос</option><option>Япон</option><option>Шийдээгүй байна</option><option>Сайтын талаар санал</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-msg">Асуулт эсвэл санал</label>
+            <textarea id="f-msg" name="message" required aria-describedby="f-msg-err"></textarea>
+            <span class="field-err" id="f-msg-err" hidden>Асуух зүйлээ бичээрэй.</span>
+          </div>
+          <div class="form-foot">
+            <button class="btn" type="submit">Instagram-аар илгээх</button>
+            <p class="form-hint">Товч дарахад мессеж чинь хуулагдаж, надтай чат нээгдэнэ. Тэнд paste хийгээд илгээхэд л болно.</p>
+          </div>
+          <div class="form-status" id="form-status" role="status" hidden></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#top" aria-label="Гарц, дээш буцах"><span class="flap" aria-hidden="true">Г</span><span class="brand-name">Гарц</span></a>
+        <p>Гадаадад сурах мөрөөдөлтэй Монгол сурагчдад зориулсан үнэгүй хөтөч.</p>
+      </div>
+      <div>
+        <h3>Холбоо барих</h3>
+        <ul class="foot-links" id="foot-socials"></ul>
+      </div>
+      <div>
+        <h3>Анхааруулга</h3>
+        <p>Гарц аль ч их сургуультай холбоогүй. Хугацаа, шаардлага, тэтгэлгийн нөхцөлийг сургуулийн албан ёсны сайтаас заавал дахин шалгаарай. ≈ тэмдэгтэй огноог өмнөх жилийн хуваариар тооцсон.</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="made">Created with ❤️ by Nanjinsuvd</span>
+      <span>© <span id="year">2026</span> Гарц. Сүүлд шинэчилсэн <span id="updated"></span></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// холбоо барих хаягууд
+const ME = {
+  instagram: "nanjinsuvd",
+  facebookName: "Juna Nanj",
+  // профайлын шууд линкээ авбал энд солино
+  facebookUrl: "https://www.facebook.com/search/top?q=Juna%20Nanj"
+};
+
+// мэдээллээ хамгийн сүүлд шалгасан өдөр
+const CHECKED = "2026-11-16";
+
+// улс бүрийн заавар. step: [гарчиг, хэзээ, тайлбар] + tip (миний зөвлөгөө) эсвэл warn (анхаар)
+const COUNTRIES = {
+  us:{code:"US", name:"АНУ", exams:"SAT, TOEFL/IELTS",
+    facts:[["Хичээл эхлэх","9-р сар"],["Өргөдөл","8-р сарын 1 – 1-р сарын 5"],["Гол шалгалт","SAT/ACT, TOEFL, IELTS, DET"],["Тэтгэлэг","Хэрэгцээнд суурилсан (need-based)"]],
+    steps:[
+      {t:"Сургуулийн жагсаалтаа гарга", w:"11-р анги – 12-р ангийн 9-р сар",
+       b:"8–15 сургуулиа өрсөлдөөний түвшнээр нь хувааж ав: мөрөөдлийн, боломжийн, найдвартай. Тэтгэлэг хэрэгтэй бол олон улсын оюутанд need-blind эсвэл хэрэгцээг 100% хангадаг сургуулиудад анхаар. Сургууль бүрийн Net Price Calculator-оор гэр бүлдээ ногдох зардлыг тооцоод үзээрэй.",
+       tip:"Жагсаалтаа гаргахаасаа өмнө гэрийнхэнтэйгээ жилд хэр зэрэг зардал гаргаж чадах талаар ил тод ярилц. Энэ ганц яриа жагсаалтыг чинь бүхэлд нь өөрчилж магадгүй, гэхдээ хожим урам хугарахаас сэргийлнэ."},
+      {t:"Шалгалтуудаа өг", w:"11-р анги – 12-р ангийн 12-р сар",
+       b:"SAT эсвэл ACT, мөн англи хэлний TOEFL, IELTS эсвэл Duolingo English Test (DET). Ихэнх сургууль эрт шатанд 10-р сарын, ердийн шатанд 12-р сарын SAT-ийн оноог авдаг. Шалгалтын бодлого сургууль бүрт өөр тул доорх жагсаалтаас шалгаарай.",
+       tip:"Би DET-ийг гэрээсээ өгсөн. Шалгалтын төв явах шаардлагагүй, хүссэн үедээ өгч болдог нь их давуу тал. Гэхдээ бүх сургууль хүлээн авдаггүй тул өгөхөөсөө өмнө сонирхож буй сургуулиуддаа тохирох эсэхийг шалгаарай."},
+      {t:"Common App-д бүртгүүл", w:"8-р сарын 1-нээс",
+       b:"commonapp.org дээр бүртгэл үүсгээд Profile, Family, Education, Testing хэсгүүдийг бөглө. Activities хэсэгт 10 хүртэл үйл ажиллагаа, Honors хэсэгт 5 хүртэл шагнал бичих боломжтой. Тайлбар бүр богино тул үйл үгээр эхэлж, тоо баримт ашиглаарай.",
+       warn:"Нэр, төрсөн огноогоо паспорттайгаа яг адилхан бич. Энд гарсан жижиг зөрүү дараа нь I-20, визний үед толгойны өвчин болдог."},
+      {t:"Хувийн эссэгээ бич", w:"8–10-р сар",
+       b:"Common App-ийн 7 сэдвээс нэгийг сонгоод 650 үг хүртэл эссэ бич. Сургууль бүр нэмэлт эссэ (supplement) шаарддаг тул тэдэнд ч цаг үлдээгээрэй. Багш, найздаа уншуулж санал аваарай.",
+       tip:"Эссэ бол оноон дээр харагддаггүй чамайг харуулах ганц газар. Эхний ноорог муу байх нь хэвийн, гол нь бичиж эхлэх. Том ололт биш, чамайг өөрчилсөн жижиг мөчийг бичихээс бүү ай."},
+      {t:"Зөвлөмж, дүнгийн хуудсаа бэлтгэ", w:"9–10-р сар",
+       b:"2 багшийн зөвлөмж, сургуулийн зөвлөх эсвэл захирлын тодорхойлолт (School Report), 9–12-р ангийн дүнгийн хуудас англи орчуулгатай, сургуулийн танилцуулга (School Profile) хэрэгтэй. Багш нартаа дор хаяж нэг сарын өмнө хүсэлтээ тавиарай.",
+       tip:"Манай сургуульд college counselor байхгүй. Ийм үед захирал эсвэл ангийн багш Common App дээр энэ үүргийг гүйцэтгэж болно. Тэдэнд юуг, хэзээ хийхийг энгийнээр тайлбарласан нэг хуудас бэлдээд өгвөл ажлыг нь их хөнгөлнө."},
+      {t:"Санхүүгийн тусламж хүс", w:"Өргөдөлтэй зэрэг",
+       b:"Тэтгэлэг хүсэх бол CSS Profile эсвэл сургуулийн олон улсын санхүүгийн маягтыг бөглөнө. Эцэг эхийн орлогын тодорхойлолт, банкны хуулга хэрэгтэй. CSS Profile хураамжтай, харин зарим сургууль (жишээ нь Dartmouth) оронд нь үнэгүй ISFAA маягт хүлээн авдаг.",
+       warn:"Санхүүгийн маягтын хугацаа өргөдлийн хугацаатай ихэвчлэн ижил, заримдаа бүр эрт байдаг. Сургууль бүрийн financial aid хуудсыг тусад нь шалга."},
+      {t:"Өргөдлөө илгээ", w:"11/1 ба 1/1–1/5",
+       b:"Эрт шат (ED, EA, REA) ихэвчлэн 11-р сарын 1, ердийн шат (RD) 1-р сарын 1–5. ED нь элсвэл заавал суралцах гэрээ гэдгийг санаарай. Өргөдлийн хураамж $75–90; төлөх боломжгүй бол fee waiver хүсэж болно.",
+       warn:"Сүүлийн өдөр Common App ачааллаас болж удааширдаг. Хэдэн хоногийн өмнө илгээчихвэл тайван унтана."},
+      {t:"Хариугаа аваад шийдвэр гарга", w:"12-р сар – 5-р сарын 1",
+       b:"Эрт шатны хариу 12-р сарын дундуур, ердийн шатных 3-р сарын сүүл – 4-р сарын эхээр гарна. Санхүүгийн саналуудаа харьцуулаад 5-р сарын 1 гэхэд нэг сургуулиа баталгаажуул."},
+      {t:"Оюутны виз мэдүүл", w:"5–8-р сар",
+       b:"Сургуулиас I-20 маягт ирмэгц SEVIS хураамж төлөөд Улаанбаатар дахь АНУ-ын Элчин сайдын яаманд F-1 визний ярилцлагад бүртгүүл."}
+    ],
+    docs:["Гадаад паспорт","9–12-р ангийн дүнгийн хуудас (англи орчуулгатай, баталгаажсан)","SAT эсвэл ACT-ийн оноо","TOEFL, IELTS эсвэл DET-ийн оноо","Common App хувийн эссэ","Сургууль бүрийн нэмэлт эссэ","2 багшийн зөвлөмж","Зөвлөх эсвэл захирлын тодорхойлолт (School Report)","Сургуулийн танилцуулга (School Profile)","Шагнал, сертификатын хуулбар","CSS Profile эсвэл санхүүгийн маягт","Эцэг эхийн орлогын тодорхойлолт"],
+    tips:["Need-blind гэдэг нь тэтгэлэг хүссэн эсэх чинь элсэлтийн шийдвэрт нөлөөлөхгүй гэсэн үг. Need-aware сургуульд нөлөөлж болно. Энэ ялгааг жагсаалтаа гаргахаасаа өмнө ойлгоорой.","ED-г зөвхөн тухайн сургууль чиний хамгийн эхний сонголт бөгөөд санхүүгийн хувьд боломжтой гэдэгт итгэлтэй үедээ сонго.","Бүх бичиг баримтаа нэг хавтсанд цэгцэлж, хугацаа бүрийг утасныхаа хуанлид сануулагчтай тэмдэглэ. Сүүлийн мөчид юм хайх шиг стресстэй зүйл байхгүй."],
+    links:[["Common App","https://www.commonapp.org"],["CSS Profile","https://cssprofile.collegeboard.org"],["SAT (College Board)","https://satsuite.collegeboard.org"],["EducationUSA","https://educationusa.state.gov"]]
+  },
+  cn:{code:"CN", name:"Хятад", exams:"CSCA, HSK",
+    facts:[["Хичээл эхлэх","9-р сар"],["Өргөдөл","9-р сар – 5-р сар (сургуулиас хамаарна)"],["Гол шалгалт","CSCA, HSK эсвэл IELTS/TOEFL"],["Тэтгэлэг","CSC, их сургууль, хотын тэтгэлэг"]],
+    steps:[
+      {t:"Хөтөлбөрийн хэлээ сонго", w:"11-р анги",
+       b:"Хятад хэлээр заах хөтөлбөр олон, төлбөр нь бага боловч ихэвчлэн HSK 4–6 шаарддаг. Бүрэн англи хэлний хөтөлбөрт IELTS эсвэл TOEFL хэрэгтэй. Сургууль бүрийн хөтөлбөрийн жагсаалтыг (catalog) уншаарай."},
+      {t:"CSCA шалгалт өг", w:"12, 1, 3-р сар",
+       b:"2026/27 хичээлийн жилээс Хятадын Засгийн газрын тэтгэлэгтэй их сургуулиуд бакалаврын өргөдөлд CSCA шаарддаг болсон. Жилд 5 удаа зохиогдох ба онлайнаар гэрээсээ өгч болно. Хятад хэл, математик үндсэн; физик, химийг мэргэжлээс хамаарч өгнө. Хураамж нь 1 хичээл 450, 2 ба түүнээс дээш хичээл 700 юань.",
+       warn:"CSCA шинэ шалгалт учраас журам нь хурдан өөрчлөгдөж байна. csca.cn болон сонирхож буй сургуулийнхаа сайтыг тогтмол шалгаарай."},
+      {t:"HSK эсвэл англи хэлний оноо ав", w:"Өргөдлөөс 2–3 сарын өмнө",
+       b:"HSK-г Улаанбаатарт өгөх боломжтой. Шаардлагатай түвшин хөтөлбөрөөс хамаарна: жишээ нь Tsinghua-гийн хятад-англи хөтөлбөрт HSK 5, PKU-ийн хятад хэлний хөтөлбөрт HSK 6."},
+      {t:"Бичиг баримтаа бүрдүүл", w:"10–12-р сар",
+       b:"Паспорт, ЕБС-ийн гэрчилгээ эсвэл төгсөх тодорхойлолт, дүнгийн хуудас (нотариатаар баталгаажсан англи эсвэл хятад орчуулга), гадаад иргэний эрүүл мэндийн үзлэгийн маягт, 2 зөвлөмж, суралцах төлөвлөгөө."},
+      {t:"Сургуулийн системээр өргөдөл гарга", w:"9-р сар – 5-р сар",
+       b:"Сургууль бүр өөрийн бүртгэлийн системтэй, хугацаа нь ч ялгаатай: Tsinghua эхний шатаа 11-р сард хаадаг бол Zhejiang 5-р сар хүртэл авдаг. Өргөдлийн хураамж ихэвчлэн 400–800 юань."},
+      {t:"Тэтгэлэгт зэрэг бүртгүүл", w:"12-р сар – 3-р сар",
+       b:"Хятадын Засгийн газрын тэтгэлэг (CSC) сургалтын төлбөр, байр, сарын тэтгэлгийг хамардаг. Хоёр орны хэлэлцээрийн (Type A) тэтгэлгийг Монголын талын эрх бүхий байгууллагаар, их сургуулийн (Type B) тэтгэлгийг campuschina.org болон сургуулийн системээр зэрэг гаргана.",
+       tip:"Олон хүн андуурдаг нэг зүйл: тэтгэлэг, элсэлт хоёр тусдаа системтэй. Хоёуланд нь бүртгүүлэхээ бүү мартаарай, нэгийг нь орхивол тэтгэлэггүй үлдэх эрсдэлтэй."},
+      {t:"Шалгалт, ярилцлагад ор", w:"1–5-р сар",
+       b:"PKU, SJTU зэрэг сургууль өөрийн элсэлтийн шалгалт эсвэл онлайн ярилцлага авдаг. Хуваарийг имэйл болон бүртгэлийн системээс хянаж бай."},
+      {t:"Элсэлтийн мэдэгдэл аваад виз мэдүүл", w:"6–8-р сар",
+       b:"Элсэлтийн мэдэгдэл (Admission Notice) болон JW201/JW202 маягтаар Улаанбаатар дахь БНХАУ-ын Элчин сайдын яаманд X1 оюутны виз мэдүүлнэ."}
+    ],
+    docs:["Гадаад паспорт","ЕБС-ийн гэрчилгээ эсвэл төгсөх тодорхойлолт (нотариат орчуулгатай)","10–12-р ангийн дүнгийн хуудас","CSCA-ийн онооны хуудас","HSK эсвэл IELTS/TOEFL-ийн оноо","Гадаад иргэний эрүүл мэндийн үзлэгийн маягт","2 зөвлөмжийн захидал","Суралцах төлөвлөгөө (study plan)","Гэмт хэргийн бүртгэлгүй тодорхойлолт (зарим сургууль)","Цээж зураг"],
+    tips:["Бичиг баримтынхаа нотариат орчуулгыг эрт хийлгэ. Нэг багц бэлдвэл хэд хэдэн сургуульд давтан ашиглаж болно.","Бүрэн англи хэлний зарим хөтөлбөр CSCA-аас чөлөөлдөг, зарим нь шаарддаг. Сургууль бүрийн журмыг тусад нь шалгаарай.","CSC-ээс гадна Шанхай, Бээжин хотын засаг захиргаа болон их сургуулиуд өөрсдийн тэтгэлэгтэй. Эдгээрийг ч бас хараарай."],
+    links:[["Campus China (CSC тэтгэлэг)","https://www.campuschina.org"],["CSCA шалгалт","https://www.csca.cn"],["HSK шалгалт","https://www.chinesetest.cn"]]
+  },
+  kr:{code:"KR", name:"Солонгос", exams:"TOPIK, TOEFL",
+    facts:[["Хичээл эхлэх","3-р сар ба 9-р сар"],["Өргөдөл","Хавар: 7–10-р сар, намар: 11–3-р сар"],["Гол шалгалт","TOPIK эсвэл TOEFL/IELTS"],["Тэтгэлэг","GKS, сургуулийн тэтгэлэг"]],
+    steps:[
+      {t:"Улирал, хэлээ сонго", w:"11-р анги",
+       b:"Солонгос жилд хоёр удаа элсүүлдэг: хавар (3-р сар) ба намар (9-р сар). Солонгос хэлний хөтөлбөрт ихэвчлэн TOPIK 3-аас дээш, зарим нь 5 шаарддаг. Yonsei UIC, KAIST зэрэг англи хэлний хөтөлбөрт TOEFL эсвэл IELTS хэрэгтэй."},
+      {t:"TOPIK эсвэл англи хэлний шалгалт өг", w:"Өргөдлөөс 3+ сарын өмнө",
+       b:"TOPIK-ийн оноо 2 жил хүчинтэй. Оноо гарах хугацааг тооцоод өргөдлийн хугацаанаас эрт өгөөрэй."},
+      {t:"Бичиг баримтаа апостильжуул", w:"Өргөдлөөс 1–2 сарын өмнө",
+       b:"ЕБС-ийн гэрчилгээ, дүнгийн хуудсыг апостиль эсвэл Солонгосын Элчин сайдын яамны консулын баталгаатай болгож, англи эсвэл солонгос орчуулгатай бэлтгэ. Эцэг эхийн паспорт, гэр бүлийн харилцааг нотлох баримт ихэвчлэн шаардлагатай.",
+       tip:"Апостиль хийлгэх, орчуулах ажил хэдэн өдөр, заримдаа долоо хоног шаарддаг. Өргөдлийн цонх нээгдэхээс өмнө бэлэн байлгаарай."},
+      {t:"Санхүүгийн баталгаа бэлтгэ", w:"Өргөдөлтэй зэрэг",
+       b:"Банкны үлдэгдлийн тодорхойлолт хэрэгтэй. Доод хэмжээг сургууль тогтоодог бөгөөд ихэвчлэн нэг жилийн сургалт ба амьжиргааны зардалтай тэнцэнэ."},
+      {t:"Онлайн өргөдөл гарга", w:"Хавар: 7–10-р сар, намар: 11–3-р сар",
+       b:"Сургуулийн олон улсын алба (OIA) эсвэл UwayApply-аар өргөдөл гаргаж, суралцах төлөвлөгөө, зөвлөмжөө оруулна. Зарим сургууль эх баримтыг шуудангаар авдаг.",
+       warn:"SNU-ийн өргөдлийн цонх 2026 онд ердөө 3 хоног нээлттэй байсан. Огноогоо хуанлидаа тэмдэглээд, бүх баримтаа урьдчилан бэлдсэн байх хэрэгтэй."},
+      {t:"Ярилцлагад бэлд", w:"Өргөдлөөс 1–2 сарын дараа",
+       b:"Шалгарсан өргөдөл гаргагчдыг ихэвчлэн онлайн ярилцлагад урьдаг. Сонгосон мэргэжил, Солонгосыг сонгосон шалтгаанаа тодорхой хэлж сураарай."},
+      {t:"GKS тэтгэлэгт өрсөлд", w:"9–11-р сар",
+       b:"Солонгосын Засгийн газрын GKS тэтгэлэг 1 жилийн хэлний бэлтгэл болон бакалаврын зардлыг хамардаг. Элчин сайдын яамны шатанд 9-р сард Study in Korea сайтаар онлайн, их сургуулийн шатанд 9–11-р сард өргөдөл авна. 25-аас доош настай байх шаардлагатай."},
+      {t:"Виз мэдүүл", w:"Элсэлтийн хариуны дараа",
+       b:"Сургуулиас ирсэн элсэлтийн гэрчилгээгээр (Certificate of Admission) Улаанбаатар дахь БНСУ-ын Элчин сайдын яаманд D-2 оюутны виз мэдүүлнэ."}
+    ],
+    docs:["Гадаад паспорт","ЕБС-ийн гэрчилгээ (апостильтай)","Дүнгийн хуудас (апостиль, орчуулгатай)","TOPIK эсвэл TOEFL/IELTS-ийн оноо","Суралцах төлөвлөгөө, хувийн мэдэгдэл","Зөвлөмжийн захидал","Эцэг эхийн паспортын хуулбар","Гэр бүлийн харилцааг нотлох баримт (төрсний гэрчилгээ г.м.)","Банкны үлдэгдлийн тодорхойлолт","Цээж зураг"],
+    tips:["GKS-ийн Элчин сайдын яамны шат болон их сургуулийн шатанд нэг жилд зэрэг өргөдөл гаргах боломжгүй. Аль нь чамд илүү тохирохыг эрт шийд.","Англиар суралцмаар бол KAIST, Yonsei UIC-ээс эхэл. KAIST элссэн олон улсын оюутанд сургалтын төлбөр, сарын тэтгэлэг олгодог; UIC шилдэг элсэгчдийн сургалтын төлбөрийг 4 жил бүрэн чөлөөлдөг.","Монгол Улс Гаагийн апостилийн конвенцид нэгдсэн тул апостиль нь баримт баталгаажуулах хамгийн шуурхай арга."],
+    links:[["Study in Korea (GKS тэтгэлэг)","https://www.studyinkorea.go.kr"],["TOPIK шалгалт","https://www.topik.go.kr"]]
+  },
+  jp:{code:"JP", name:"Япон", exams:"EJU, JLPT, SAT",
+    facts:[["Хичээл эхлэх","4-р сар, 9–10-р сар"],["Өргөдөл","Англи хөтөлбөр: 10–1-р сар"],["Гол шалгалт","EJU, JLPT эсвэл SAT + TOEFL/IELTS"],["Тэтгэлэг","MEXT, JASSO, төлбөрийн хөнгөлөлт"]],
+    steps:[
+      {t:"Замаа сонго", w:"11-р анги",
+       b:"Англи хэлний хөтөлбөрт (Waseda, UTokyo College of Design, APU) баримт бичиг, эссэ, SAT эсвэл IB, TOEFL эсвэл IELTS, ярилцлагаар элсэнэ. Япон хэлний хөтөлбөрт EJU, JLPT (ихэвчлэн N2–N1) болон сургуулийн өөрийн шалгалтаар элсэнэ.",
+       tip:"Би ч бас Японыг нэмэлт сонголтоор судалж байгаа. Англи хэлний хөтөлбөрүүдийн шаардлага АНУ-ынхтай төстэй тул хоёуланд нь зэрэг бэлдэхэд амар."},
+      {t:"Шалгалтуудаа төлөвлө", w:"11–12-р анги",
+       b:"EJU жилд 2 удаа (6, 11-р сар), JLPT жилд 2 удаа (7, 12-р сар) зохиогддог бөгөөд Улаанбаатарт өгөх боломжтой. Англи хэлний хөтөлбөрт SAT, ACT эсвэл IB болон TOEFL, IELTS-ийн оноогоо эрт бэлтгээрэй."},
+      {t:"MEXT тэтгэлэгт бүртгүүл", w:"Жил бүрийн хавар",
+       b:"Японы Засгийн газрын (MEXT) тэтгэлэгт Улаанбаатар дахь Японы Элчин сайдын яамаар бүртгүүлнэ. Бичгийн шалгалт болон ярилцлагад тэнцвэл 1 жилийн япон хэлний бэлтгэл, 4 жил бакалавр, сард 117,000 иен тэтгэлэг, сургалтын төлбөр, нислэгийн зардал авна.",
+       warn:"MEXT-ийн бүртгэл жилд нэг удаа, хавар явагддаг. 2027 оны элсэлтийнх аль хэдийн өнгөрсөн тул 2028 онд элсэх бол 2027 оны хавар гэхэд бэлэн байгаарай."},
+      {t:"Бичиг баримтаа бүрдүүл", w:"Өргөдлөөс 2 сарын өмнө",
+       b:"ЕБС-ийн гэрчилгээ, дүнгийн хуудас (англи орчуулгатай), зөвлөмж, эссэ, шалгалтын оноо. Ихэнх сургууль 12 жилийн ерөнхий боловсрол шаарддаг; Монголын 12 жилийн тогтолцоо үүнд тохирно."},
+      {t:"Онлайн өргөдөл гарга", w:"Англи хөтөлбөр: 10–1-р сар",
+       b:"Сургууль бүрийн системээр гаргана: Kyoto iUP 12-р сарын эхээр, Waseda 1-р сарын сүүлээр хаадаг. APU жилд хэд хэдэн шатаар өргөдөл авдаг."},
+      {t:"Сургуулийн тэтгэлгээ шалга", w:"Өргөдөлтэй зэрэг",
+       b:"Kyoto iUP элсэлтийн төлбөрийг бүрэн, сургалтын төлбөрийг бүтэн эсвэл хагас чөлөөлдөг. APU сургалтын төлбөрийн 30–100%-ийн хөнгөлөлт олгодог. JASSO-гийн тэтгэлэгт элссэний дараа хүсэлт гаргаж болно."},
+      {t:"COE аваад виз мэдүүл", w:"Элсэлтийн дараа",
+       b:"Сургууль таны өмнөөс оршин суух эрхийн гэрчилгээ (COE) авч өгнө. COE-гоо аваад Улаанбаатар дахь Японы Элчин сайдын яаманд оюутны виз мэдүүлнэ."}
+    ],
+    docs:["Гадаад паспорт","ЕБС-ийн гэрчилгээ (англи орчуулгатай)","Дүнгийн хуудас","SAT/ACT/IB эсвэл EJU-гийн оноо","TOEFL/IELTS эсвэл JLPT-ийн гэрчилгээ","Эссэ, хувийн мэдэгдэл","Зөвлөмжийн захидал","Санхүүгийн баталгаа (өөрөө санхүүжих бол)","Цээж зураг"],
+    tips:["UTokyo-гийн PEAK хөтөлбөр 2026 оны намраар элсэлтээ зогсоож, оронд нь бүрэн англи хэлний College of Design 2027 оны 9-р сард нээгдэнэ. Хуучин мэдээлэлд бүү төөр.","Англиар суралцсан ч япон хэлийг эрт сурч эхэлбэл дадлага, ажил хайхад их тус болно.","MEXT-ийн өмнөх жилүүдийн шалгалтын жишээ Study in Japan сайтад бий, бэлтгэлдээ ашиглаарай."],
+    links:[["Study in Japan (монгол хэлээр)","https://www.studyinjapan.go.jp/mn/"],["EJU шалгалт","https://www.jasso.go.jp/en/eju/"],["JLPT шалгалт","https://www.jlpt.jp/e/"],["Японы ЭСЯ (Монгол)","https://www.mn.emb-japan.go.jp"]]
+  }
+};
+
+// сургуулиуд. шинэ сургууль нэмэх бол энд нэг мөр нэмэхэд л болно.
+// огноо "YYYY-MM-DD". est:true = өмнөх жилийн хуваариар тооцсон, d:null бол text-ийг харуулна,
+// kind:"info" = хугацаа биш, зүгээр мэдээлэл. mine = миний хувийн тэмдэглэл
+const SCHOOLS = [
+  // АНУ
+  {id:"harvard", short:"Harvard", c:"us", name:"Harvard University", where:"Кембриж, Массачусетс",
+   intro:"АНУ-ын хамгийн эртний их сургууль. Олон улсын өргөдөл гаргагчийг санхүүгийн чадвараас үл хамааран үнэлдэг (need-blind) бөгөөд элссэн оюутны санхүүгийн хэрэгцээг 4 жилийн турш 100% хангадаг.",
+   aid:"Need-blind, хэрэгцээний 100%",
+   dl:[{l:"Эрт шат (REA)", d:"2026-11-01"},{l:"Ердийн шат (RD)", d:"2027-01-01"}],
+   tests:[["SAT/ACT","Шаардлагатай"],["Англи хэл","Заавал биш, илгээж болно"]],
+   web:"https://college.harvard.edu/admissions", email:"college@fas.harvard.edu"},
+  {id:"mit", short:"MIT", c:"us", name:"Massachusetts Institute of Technology (MIT)", where:"Кембриж, Массачусетс",
+   intro:"Инженер, шинжлэх ухаан, математикийн чиглэлээр дэлхийд тэргүүлдэг. Олон улсын оюутанд need-blind, хэрэгцээг бүрэн хангадаг. Эрт шат нь элсэх үүрэг үүсгэдэггүй.",
+   aid:"Need-blind, хэрэгцээний 100%",
+   dl:[{l:"Эрт шат (EA)", d:"2026-11-01"},{l:"Ердийн шат (RA)", d:"2027-01-05"}],
+   tests:[["SAT/ACT","Шаардлагатай"],["Англи хэл","Зөвлөмжтэй: IELTS 7.5, DET 125 (доод тал нь 7.0, 120)"]],
+   web:"https://mitadmissions.org", email:"admissions@mit.edu"},
+  {id:"yale", short:"Yale", c:"us", name:"Yale University", where:"Нью-Хейвен, Коннектикут",
+   intro:"Хүмүүнлэг, нийгмийн ухаан, эдийн засгаараа алдартай. Олон улсын оюутанд need-blind бөгөөд санхүүгийн хэрэгцээг зээлгүйгээр бүрэн хангадаг.",
+   aid:"Need-blind, хэрэгцээний 100%",
+   dl:[{l:"Эрт шат (SCEA)", d:"2026-11-01"},{l:"Ердийн шат (RD)", d:"2027-01-02"}],
+   tests:[["SAT/ACT","Шаардлагатай"],["Англи хэл","TOEFL, IELTS, DET, Cambridge (өрсөлдөхүйц: IELTS 7+, DET 120+)"]],
+   web:"https://admissions.yale.edu", email:"student.questions@yale.edu"},
+  {id:"princeton", short:"Princeton", c:"us", name:"Princeton University", where:"Принстон, Нью-Жерси",
+   intro:"Бакалаврын боловсролд төвлөрдөг судалгааны их сургууль. Олон улсын оюутанд need-blind, тэтгэлгийг зээлгүй, буцалтгүй тусламжаар олгодог. Өргөдөлд үнэлгээ авсан бичгийн ажил (graded paper) хавсаргана.",
+   aid:"Need-blind, хэрэгцээний 100%",
+   dl:[{l:"Эрт шат (SCEA)", d:"2026-11-01"},{l:"Ердийн шат (RD)", d:"2027-01-01"}],
+   tests:[["SAT/ACT","Энэ жил заавал биш, 2027–28 оноос шаардана"],["Англи хэл","TOEFL, IELTS, DET эсвэл PTE шаардлагатай"]],
+   web:"https://admission.princeton.edu", email:"uaoffice@princeton.edu"},
+  {id:"stanford", short:"Stanford", c:"us", name:"Stanford University", where:"Стэнфорд, Калифорни",
+   intro:"Технологи, инновацын төв Цахиурын хөндийд байрладаг. Олон улсын оюутанд need-aware: тэтгэлэг хүсэх нь шийдвэрт нөлөөлж болох ч элссэн бол хэрэгцээг бүрэн хангадаг.",
+   mine:"Мөрөөдлийн сургууль минь. Need-aware учраас тэтгэлэгтэй элсэх өрсөлдөөн илүү ширүүн гэдгийг мэдэж байгаа ч оролдохгүй бол мэдэхгүй шүү дээ.",
+   aid:"Need-aware, элссэн бол хэрэгцээний 100%",
+   dl:[{l:"Эрт шат (REA)", d:"2026-11-01"},{l:"Ердийн шат (RD)", d:"2027-01-05"}],
+   tests:[["SAT/ACT","Шаардлагатай"],["Англи хэл","Шаардахгүй"]],
+   web:"https://admission.stanford.edu", email:"admission@stanford.edu"},
+  {id:"dartmouth", short:"Dartmouth", c:"us", name:"Dartmouth College", where:"Хановер, Нью-Хэмпшир",
+   intro:"Айви лигийн хамгийн жижиг, багш, оюутны харилцаа ойр сургууль. 2022 оноос олон улсын оюутанд need-blind болсон. Эрт шат (ED) нь элсвэл заавал суралцах гэрээ.",
+   aid:"Need-blind, хэрэгцээний 100%",
+   dl:[{l:"Эрт шат (ED, заавал элсэх)", d:"2026-11-01"},{l:"Ердийн шат (RD)", d:"2027-01-02"}],
+   tests:[["SAT/ACT","Шаардлагатай"],["Англи хэл","TOEFL, IELTS, DET, Cambridge"]],
+   web:"https://admissions.dartmouth.edu", email:"admissions.reply@dartmouth.edu"},
+  {id:"amherst", short:"Amherst", c:"us", name:"Amherst College", where:"Амхерст, Массачусетс",
+   intro:"АНУ-ын шилдэг либерал артс коллежийн нэг: жижиг анги, багштай ойр ажиллах боломж. Олон улсын оюутанд need-blind бөгөөд хэрэгцээг зээлгүйгээр бүрэн хангадаг.",
+   aid:"Need-blind, хэрэгцээний 100%",
+   dl:[{l:"Эрт шат (ED, заавал элсэх)", d:"2026-11-09"},{l:"Ердийн шат (RD)", d:"2027-01-05"}],
+   tests:[["SAT/ACT","Заавал биш"],["Англи хэл","TOEFL, IELTS эсвэл DET (англи хэл төрөлх биш бол)"]],
+   web:"https://www.amherst.edu/admission", email:"admission@amherst.edu"},
+  {id:"nyu", short:"NYU", c:"us", name:"New York University (NYU)", where:"Нью-Йорк",
+   intro:"Нью-Йорк хотын төвд байрлах том хувийн их сургууль, Абу-Даби болон Шанхайд кампустай. Нью-Йоркийн кампуст олон улсын оюутны тэтгэлэг хязгаарлагдмал бол NYU Abu Dhabi элссэн оюутны хэрэгцээг бүрэн хангадаг.",
+   mine:"Бас нэг мөрөөдлийн сургууль минь. Тэтгэлэг хэрэгтэй бол NYU Abu Dhabi-г заавал хараарай.",
+   aid:"Хязгаарлагдмал; NYU Abu Dhabi хэрэгцээний 100%",
+   dl:[{l:"Эрт шат I (ED I)", d:"2026-11-01"},{l:"Эрт шат II (ED II)", d:"2027-01-01"},{l:"Ердийн шат (RD)", d:"2027-01-05"}],
+   tests:[["SAT/ACT","Энэ жил заавал биш"],["Англи хэл","TOEFL, IELTS эсвэл DET (англи хэл төрөлх биш бол)"]],
+   web:"https://www.nyu.edu/admissions/undergraduate-admissions.html", email:"admissions@nyu.edu"},
+
+  // Хятад
+  {id:"tsinghua", short:"Tsinghua", c:"cn", name:"Tsinghua University", local:"清华大学", where:"Бээжин",
+   intro:"Хятадын инженер, шинжлэх ухааны тэргүүлэх их сургууль. Ихэнх хөтөлбөр хятад, англи хосолсон хэлээр явагддаг; Зыжин, Жишань коллежид бүрэн англи хэлний хөтөлбөр бий. Шилдэг элсэгчдэд эхний жилийн сургалтын төлбөрийн тэтгэлэг олгодог.",
+   aid:"CSC, 1-р курсын сургалтын төлбөрийн тэтгэлэг",
+   dl:[{l:"1-р шат", d:"2026-11-20"},{l:"2-р шат", d:"2027-02-28"}],
+   tests:[["HSK","5+ (хэсэг бүр 60+), хятад-англи хөтөлбөрт"],["Англи хэл","TOEFL/IELTS, англи хөтөлбөрт"]],
+   note:"Бүрэн англи хэлний хөтөлбөр бүр өөрийн хуваарьтай.",
+   web:"https://international.join-tsinghua.edu.cn", email:"admissions@tsinghua.edu.cn"},
+  {id:"pku", short:"Peking Univ.", c:"cn", name:"Peking University", local:"北京大学", where:"Бээжин",
+   intro:"Хятадын хамгийн нэр хүндтэй их сургуулиудын нэг; хүмүүнлэг, эдийн засаг, хууль, байгалийн ухаанаар хүчтэй. Бакалаврын хичээл гол төлөв хятад хэлээр заагддаг; бичгийн шалгалт эсвэл олон улсын шалгалтын оноогоор элсэнэ.",
+   aid:"CSC, сургуулийн тэтгэлэг",
+   dl:[{l:"Бакалаврын өргөдөл", d:"2027-02-28", est:true}],
+   tests:[["HSK","6 (210+), хятад хэлний хөтөлбөрт"],["CSCA","Шаардлагатай"]],
+   web:"https://www.isd.pku.edu.cn", email:"study@pku.edu.cn"},
+  {id:"fudan", short:"Fudan", c:"cn", name:"Fudan University", local:"复旦大学", where:"Шанхай",
+   intro:"Шанхайн тэргүүлэх иж бүрэн их сургууль; эдийн засаг, олон улсын харилцаа, сэтгүүл зүйгээрээ алдартай. Англи хэлээр заах эдийн засгийн бакалаврын хөтөлбөр (UIPE) бий.",
+   aid:"CSC, Шанхай хотын, сургуулийн тэтгэлэг",
+   dl:[{l:"Хятад хөтөлбөр, 1-р үе", d:"2027-01-15", est:true},{l:"Хятад хөтөлбөр, 2-р үе", d:"2027-03-06", est:true},{l:"UIPE (англи), намрын элсэлт", d:"2027-05-15", est:true}],
+   tests:[["CSCA","Хятад хэлний хөтөлбөрт шаардлагатай"],["HSK","Хөтөлбөрөөс хамаарна"],["Англи хэл","UIPE-д TOEFL/IELTS"]],
+   web:"https://iso.fudan.edu.cn/isoenglish/", email:"isoadmission@fudan.edu.cn"},
+  {id:"sjtu", short:"Shanghai Jiao Tong", c:"cn", name:"Shanghai Jiao Tong University", local:"上海交通大学", where:"Шанхай",
+   intro:"Инженер, технологи, анагаахаар тэргүүлдэг. Механик, цахилгаан, өгөгдлийн шинжлэх ухаан зэрэг мэргэжилтэй англи хэлний Инженерийн кластер хөтөлбөр олон улсын оюутанд нээлттэй.",
+   aid:"CSC, Шанхай хотын, сургуулийн тэтгэлэг",
+   dl:[{l:"Англи хөтөлбөр, эрт шат", d:"2026-11-01"},{l:"Англи хөтөлбөр, ердийн шат", d:"2027-03-31"},{l:"CSCA оноо илгээх", d:"2027-06-30"}],
+   tests:[["CSCA","Шаардлагатай (урьдчилсан элсэлтийн дараа)"],["Англи хэл","TOEFL/IELTS"],["Хятад хөтөлбөр","HSK ба SJTU-гийн элсэлтийн шалгалт"]],
+   web:"https://isc.sjtu.edu.cn", email:"isc.d@sjtu.edu.cn"},
+  {id:"zju", short:"Zhejiang", c:"cn", name:"Zhejiang University", local:"浙江大学", where:"Ханжоу",
+   intro:"Хятадын хамгийн том судалгааны их сургуулиудын нэг; инженер, компьютер, бизнесээр хүчтэй. Ханжоу болон Хайнин олон улсын кампуст англи хэлээр заах бакалаврын хөтөлбөрүүдтэй.",
+   aid:"CSC, Жэжян мужийн, сургуулийн тэтгэлэг",
+   dl:[{l:"Англи хөтөлбөр (ихэнх)", d:"2027-05-31", est:true}],
+   tests:[["Англи хэл","TOEFL 80, IELTS 6.5 эсвэл DET 120"],["CSCA","Шаардлагатай, англи хөтөлбөрт англиар"],["HSK","Хятад хөтөлбөрт"]],
+   web:"https://iczu.zju.edu.cn", email:"admission2@zju.edu.cn"},
+
+  // Солонгос
+  {id:"snu", short:"Seoul National", c:"kr", name:"Seoul National University", local:"서울대학교", where:"Сөүл",
+   intro:"Солонгосын тэргүүлэх үндэсний их сургууль. Олон улсын элсэлт жилд хоёр удаа явагддаг ба өргөдлийн цонх хэдхэн хоног нээгддэг. 2027 оны намраас гадаад оюутанд зориулсан шинэ бакалаврын салбар нээхээр төлөвлөж байна.",
+   aid:"SNU President Fellowship, GKS",
+   dl:[{l:"Намар 2027 (9-р сард эхэлнэ)", d:"2027-03-05", est:true}],
+   tests:[["Хэл","TOPIK эсвэл TOEFL/IELTS, хөтөлбөрөөс хамаарна"]],
+   note:"2026 онд өргөдлийн цонх 3/3–3/5 нээлттэй байсан.",
+   web:"https://en.snu.ac.kr/admission", email:"snuadmit@snu.ac.kr"},
+  {id:"kaist", short:"KAIST", c:"kr", name:"KAIST", local:"한국과학기술원", where:"Тэжон",
+   intro:"Солонгосын шинжлэх ухаан, технологийн тэргүүлэх их сургууль. Бүх хичээл англи хэлээр явагддаг, солонгос хэл шаардахгүй. Элссэн олон улсын оюутанд сургалтын төлбөр болон сарын тэтгэлэг олгодог.",
+   aid:"KAIST тэтгэлэг: сургалтын төлбөр ба сарын тэтгэлэг",
+   dl:[{l:"Эрт шат", d:"2026-10-22"},{l:"Ердийн шат (намар 2027)", d:"2027-01-14"}],
+   tests:[["Англи хэл","2027 онд заавал биш; зөвлөмж: TOEFL iBT 83, IELTS 6.5"],["Солонгос хэл","Шаардахгүй"]],
+   web:"https://admission.kaist.ac.kr/intl-undergraduate/", email:"creative.adm@kaist.ac.kr"},
+  {id:"yonsei", short:"Yonsei UIC", c:"kr", name:"Yonsei University, Underwood International College", local:"연세대학교", where:"Сөүл",
+   intro:"Солонгосын анхны бүрэн англи хэлний либерал артс коллеж. Хавар, намар элсүүлдэг. Шилдэг элсэгчдийн 4 жилийн сургалтын төлбөрийг бүрэн чөлөөлөх тэтгэлэгт автоматаар хамруулна.",
+   aid:"Сургалтын төлбөрийн бүрэн тэтгэлэг (шилдэг элсэгчдэд)",
+   dl:[{l:"Хавар 2027 (1-р шат)", d:"2026-09-17"},{l:"Намар 2027 (2-р шат)", d:null, text:"2027 оны 3-р сар"}],
+   tests:[["Англи хэл","TOEFL, IELTS г.м. (доод оноо тогтоогоогүй)"],["SAT/ACT","Заавал биш, зөвлөмжтэй"]],
+   web:"https://uic.yonsei.ac.kr", email:"uicadm@yonsei.ac.kr"},
+  {id:"korea", short:"Korea Univ.", c:"kr", name:"Korea University", local:"고려대학교", where:"Сөүл",
+   intro:"SKY гурвалын нэг; бизнес, хууль, олон улсын судлалаар алдартай. Олон улсын оюутныг элсэлтийн үнэлгээгээр нь тэтгэлэгт автоматаар хамруулдаг.",
+   aid:"Элсэлтийн тэтгэлэг (автомат), GKS",
+   dl:[{l:"Намар 2027", d:null, text:"2027 оны 3-р сар"}],
+   tests:[["Хэл","TOPIK эсвэл англи хэлний оноо, хөтөлбөрөөс хамаарна"]],
+   note:"2026 онд намрын өргөдөл 3/2–3/27 хүртэл авсан.",
+   web:"https://oia.korea.ac.kr", email:"admission@korea.ac.kr"},
+
+  // Япон
+  {id:"utokyo", short:"UTokyo Design", c:"jp", name:"The University of Tokyo, College of Design", local:"東京大学", where:"Токио",
+   intro:"Японы тэргүүлэх их сургуулийн 2027 оны 9-р сард нээгдэх шинэ факультет: бакалавр, магистрыг хамтатгасан 5 жилийн бүрэн англи хэлний хөтөлбөр. Өмнөх PEAK хөтөлбөр 2026 онд элсэлтээ зогсоосон.",
+   aid:"MEXT, JASSO; сургуулийн тэтгэлгийг журмаас шалгах",
+   dl:[{l:"Намар 2027 (9-р сар)", d:"2026-11-05"},{l:"Эцсийн хариу гарна", d:"2027-02-20", kind:"info"}],
+   tests:[["Англи хэл","Сургуулийн заасан шалгалт (TOEFL, IELTS г.м.)"],["Стандарт шалгалт","SAT, ACT, IB зэргээс нэг"]],
+   web:"https://design.adm.u-tokyo.ac.jp", email:null, contact:"Сайт дээрх асуулгын маягтаар"},
+  {id:"kyoto", short:"Kyoto iUP", c:"jp", name:"Kyoto University, Kyoto iUP", local:"京都大学", where:"Киото",
+   intro:"6 сарын япон хэлний бэлтгэлийн дараа 4 жил япон хэлээр суралцах олон улсын бакалаврын хөтөлбөр. Өргөдөл гаргахад япон хэл шаардахгүй. Элсэлтийн төлбөрийг бүрэн, сургалтын төлбөрийг бүтэн эсвэл хагас чөлөөлж, сард 120,000 иен хүртэл тэтгэлэг олгоно.",
+   aid:"Төлбөрийн чөлөөлөлт, сард 120,000 иен хүртэл",
+   dl:[{l:"Намар 2027 (10-р сар)", d:"2026-12-03"}],
+   tests:[["Япон хэл","Шаардахгүй"],["Бусад","Англи хэл, академик шалгалтын шаардлагыг журмаас шалгах"]],
+   web:"https://www.iup.kyoto-u.ac.jp", email:"kyoto_iup@mail2.adm.kyoto-u.ac.jp"},
+  {id:"waseda", short:"Waseda", c:"jp", name:"Waseda University", local:"早稲田大学", where:"Токио",
+   intro:"Японы хамгийн нэр хүндтэй хувийн их сургуулиудын нэг. Улс төр, эдийн засаг (PSE), олон улсын либерал судлал (SILS), инженер зэрэг 6 сургуульд англи хэлний бакалаврын хөтөлбөртэй; япон хэл шаардахгүй.",
+   aid:"Элсэхээс өмнөх тэтгэлэг (амжилтад суурилсан), MEXT, JASSO",
+   dl:[{l:"Намар 2027 (9-р сар)", d:"2027-01-28"}],
+   tests:[["Стандарт шалгалт","SAT, ACT эсвэл IB (боловсролын системээс хамаарна)"],["Англи хэл","TOEFL iBT эсвэл IELTS Academic"]],
+   note:"Өргөдөл 2027 оны 1-р сарын 7-нд нээгдэнэ.",
+   web:"https://www.waseda.jp/inst/admission/en/undergraduate/english/", email:"admission@list.waseda.jp"},
+  {id:"apu", short:"APU", c:"jp", name:"Ritsumeikan Asia Pacific University (APU)", local:"立命館アジア太平洋大学", where:"Беппу, Ойта",
+   intro:"Оюутнуудын бараг тал нь гадаадын иргэн олон соёлт кампус. Англи эсвэл япон хэлээр суралцаж болно. Элсэхдээ сургалтын төлбөрийн 30–100% хөнгөлөлтөд автоматаар өрсөлдөнө.",
+   aid:"Сургалтын төлбөрийн 30–100% хөнгөлөлт",
+   dl:[{l:"Хавар 2027 (4-р сар), сүүлийн шат", d:"2026-12-09"},{l:"Намар 2027 (9-р сар)", d:null, text:"2027 оны хавар"}],
+   tests:[["Англи хэл","IELTS 6.0, TOEFL iBT 75 эсвэл DET 110"],["Япон хэл","Англи хэлээр суралцахад шаардахгүй"]],
+   note:"Хугацаа таны амьдарч буй улсаас хамааран ялгаатай.",
+   web:"https://admissions.apu.ac.jp", email:"welcome@apu.ac.jp"}
+];
+
+/* ----------------------------------------------------------------
+   жижиг туслах функцүүд
+   ---------------------------------------------------------------- */
+const $ = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// огноог цагийн бүсээс үл хамааран өдрөөр нь харьцуулна
+const today = (() => { const n = new Date(); return Date.UTC(n.getFullYear(), n.getMonth(), n.getDate()); })();
+const toUTC = iso => { const [y,m,d] = iso.split("-").map(Number); return Date.UTC(y, m-1, d); };
+const daysLeft = iso => Math.round((toUTC(iso) - today) / 864e5);
+const fmt = iso => iso.replaceAll("-", ".");
+const fmtToday = () => { const n = new Date(); return `${n.getFullYear()}.${String(n.getMonth()+1).padStart(2,"0")}.${String(n.getDate()).padStart(2,"0")}`; };
+
+function status(dl){
+  if (dl.kind === "info") return {cls:"info", text:""};
+  if (!dl.d) return {cls:"tba", text:"Огноо удахгүй зарлагдана"};
+  const n = daysLeft(dl.d);
+  if (n < 0) return {cls:"closed", text:"Хаагдсан"};
+  if (n === 0) return {cls:"soon", text:"Өнөөдөр хаагдана"};
+  if (n <= 30) return {cls:"soon", text:`${n} хоног үлдсэн`};
+  return {cls:"open", text:`${n} хоног үлдсэн`};
+}
+function nextDeadline(s){
+  const up = s.dl.filter(x => x.d && x.kind !== "info" && daysLeft(x.d) >= 0).sort((a,b) => toUTC(a.d) - toUTC(b.d));
+  if (up.length) return up[0];
+  return s.dl.find(x => !x.d) || null;
+}
+function sortKey(s){
+  const nd = nextDeadline(s);
+  if (!nd) return 9e15;   // бүх хугацаа нь хаагдсан бол хамгийн сүүлд
+  if (!nd.d) return 8e15; // огноо зарлаагүй бол түүний өмнө
+  return toUTC(nd.d);
+}
+const flaps = txt => `<span class="flaps" aria-hidden="true">${[...txt].map(ch => `<span class="flap">${esc(ch)}</span>`).join("")}</span>`;
+const icon = {
+  ext:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg>',
+  mail:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+  aid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>'
+};
+const newTab = '<span class="sr-only"> (шинэ цонхонд нээгдэнэ)</span>';
+
+/* ----------------------------------------------------------------
+   төлөв
+   ---------------------------------------------------------------- */
+const state = {guide:"us", country:"all", q:"", openOnly:false, sort:"deadline", view:"cards"};
+const store = {
+  get(k, f){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : f; } catch(e){ return f; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+};
+let checks = store.get("garts-checks", {});
+
+/* ----------------------------------------------------------------
+   нүүр: улсын товчнууд, ойрын хугацааны самбар
+   ---------------------------------------------------------------- */
+function renderGates(){
+  $("#gates").innerHTML = Object.entries(COUNTRIES).map(([k,c]) => {
+    const n = SCHOOLS.filter(s => s.c === k).length;
+    return `<button type="button" class="gate" data-c="${k}" aria-pressed="false">
+      ${flaps(c.code)}
+      <span class="gate-name">${esc(c.name)}</span>
+      <span class="gate-meta">${n} сургууль, ${esc(c.exams)}</span>
+    </button>`;
+  }).join("");
+  $$("#gates .gate").forEach(b => b.addEventListener("click", () => {
+    selectCountry(b.dataset.c);
+    document.getElementById("zaavar").scrollIntoView({behavior: reduceMotion ? "auto" : "smooth"});
+  }));
+}
+
+function renderBoard(){
+  $("#board-today").textContent = "Өнөөдөр " + fmtToday();
+  const rows = [];
+  SCHOOLS.forEach(s => s.dl.forEach(x => {
+    if (x.d && x.kind !== "info" && daysLeft(x.d) >= 0) rows.push({s, x, n: daysLeft(x.d)});
+  }));
+  rows.sort((a,b) => a.n - b.n || a.s.name.localeCompare(b.s.name));
+  const top = rows.slice(0, 6);
+  if (!top.length){
+    $("#board-list").innerHTML = `<li class="board-empty">Ойрын хугацаа алга. Сургуулиудын шинэ хуваарийг доороос шалгаарай.</li>`;
+    $("#board-est").hidden = true;
+    return;
+  }
+  $("#board-list").innerHTML = top.map(({s,x,n}) => {
+    const days = String(n).padStart(2, "0");
+    return `<li><button type="button" class="board-row${n <= 30 ? " is-urgent" : ""}" data-id="${s.id}"
+      aria-label="${esc(s.name)}, ${esc(x.l)}, ${fmt(x.d)}${x.est ? " (тооцоолсон)" : ""}, ${n} хоног үлдсэн">
+      ${flaps(COUNTRIES[s.c].code)}
+      <span class="b-name">${esc(s.short || s.name)}<span class="b-round">${esc(x.l)}</span></span>
+      <span class="b-date">${x.est ? "≈ " : ""}${fmt(x.d)}</span>
+      <span class="b-days"><span class="flaps" aria-hidden="true">${[...days].map(d => `<span class="flap" data-final="${d}">${d}</span>`).join("")}</span><span class="b-unit">хоног</span></span>
+    </button></li>`;
+  }).join("");
+  $("#board-est").hidden = !top.some(r => r.x.est);
+  $$("#board-list .board-row").forEach(b => b.addEventListener("click", () => jumpTo(b.dataset.id)));
+  if (!reduceMotion) spinFlaps();
+}
+// ачаалахад тоонууд жинхэнэ самбар шиг хэсэг эргэлдээд байрандаа сууна
+function spinFlaps(){
+  $$("#board-list .flap[data-final]").forEach((el, i) => {
+    const final = el.dataset.final;
+    const stopAt = 450 + i * 70;
+    const t0 = performance.now();
+    const tick = now => {
+      if (now - t0 >= stopAt){ el.textContent = final; return; }
+      el.textContent = Math.floor(Math.random() * 10);
+      setTimeout(() => requestAnimationFrame(tick), 55);
+    };
+    requestAnimationFrame(tick);
+  });
+}
+
+/* ----------------------------------------------------------------
+   заавар
+   ---------------------------------------------------------------- */
+function renderTabs(){
+  $("#tabs").innerHTML = Object.entries(COUNTRIES).map(([k,c]) =>
+    `<button type="button" role="tab" class="tab" id="tab-${k}" data-c="${k}" aria-controls="guide-panel" aria-selected="${k===state.guide}" tabindex="${k===state.guide ? 0 : -1}">${flaps(c.code)}${esc(c.name)}</button>`
+  ).join("");
+  const tabs = $$("#tabs .tab");
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => selectCountry(t.dataset.c));
+    t.addEventListener("keydown", e => {
+      let j = null;
+      if (e.key === "ArrowRight") j = (i + 1) % tabs.length;
+      if (e.key === "ArrowLeft") j = (i - 1 + tabs.length) % tabs.length;
+      if (e.key === "Home") j = 0;
+      if (e.key === "End") j = tabs.length - 1;
+      if (j !== null){ e.preventDefault(); tabs[j].focus(); selectCountry(tabs[j].dataset.c); }
+    });
+  });
+}
+function renderGuide(){
+  const k = state.guide, c = COUNTRIES[k];
+  $$("#tabs .tab").forEach(t => { const on = t.dataset.c === k; t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1; });
+  $("#guide-panel").setAttribute("aria-labelledby", "tab-" + k);
+  $("#facts").innerHTML = c.facts.map(([t,v]) => `<div><dt>${esc(t)}</dt><dd>${esc(v)}</dd></div>`).join("");
+  $("#steps").innerHTML = c.steps.map((s, i) => `<li class="step">
+      <span class="step-num" aria-hidden="true">${i+1}</span>
+      <div>
+        <h3><span class="sr-only">Алхам ${i+1}: </span>${esc(s.t)}</h3>
+        <span class="step-when">${esc(s.w)}</span>
+        <p>${esc(s.b)}</p>
+        ${s.tip ? `<p class="note note-tip"><b>Миний зөвлөгөө</b>${esc(s.tip)}</p>` : ""}
+        ${s.warn ? `<p class="note note-warn"><b>Анхаар</b>${esc(s.warn)}</p>` : ""}
+      </div>
+    </li>`).join("");
+  const done = checks[k] || [];
+  $("#checklist").innerHTML = c.docs.map((d, i) => `<li><label><input type="checkbox" data-i="${i}" ${done.includes(i) ? "checked" : ""}><span>${esc(d)}</span></label></li>`).join("");
+  $$("#checklist input").forEach(inp => inp.addEventListener("change", () => {
+    const set = new Set(checks[k] || []);
+    inp.checked ? set.add(+inp.dataset.i) : set.delete(+inp.dataset.i);
+    checks[k] = [...set]; store.set("garts-checks", checks); updateMeter();
+  }));
+  $("#tips").innerHTML = c.tips.map(t => `<li>${esc(t)}</li>`).join("");
+  $("#links").innerHTML = c.links.map(([t,u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}${icon.ext}${newTab}</a></li>`).join("");
+  updateMeter();
+}
+function updateMeter(){
+  const k = state.guide, total = COUNTRIES[k].docs.length, n = (checks[k] || []).length;
+  $("#check-count").textContent = `${n}/${total} бэлэн`;
+  $("#meter").style.width = (n / total * 100) + "%";
+}
+$("#check-reset").addEventListener("click", () => { checks[state.guide] = []; store.set("garts-checks", checks); renderGuide(); });
+
+/* ----------------------------------------------------------------
+   сургуулиуд
+   ---------------------------------------------------------------- */
+function renderChips(){
+  const opts = [["all","Бүгд"], ...Object.entries(COUNTRIES).map(([k,c]) => [k, c.name])];
+  $("#chips").innerHTML = opts.map(([k,label]) => {
+    const n = k === "all" ? SCHOOLS.length : SCHOOLS.filter(s => s.c === k).length;
+    return `<button type="button" class="chip" data-c="${k}" aria-pressed="${k===state.country}">${esc(label)} <small>${n}</small></button>`;
+  }).join("");
+  $$("#chips .chip").forEach(b => b.addEventListener("click", () => {
+    state.country = b.dataset.c;
+    if (b.dataset.c !== "all"){ state.guide = b.dataset.c; renderGuide(); }
+    syncCountryUI(); renderSchools();
+  }));
+}
+function haystack(s){
+  return [s.name, s.local||"", s.where, s.intro, s.aid, COUNTRIES[s.c].name, ...s.tests.flat(), ...s.dl.map(x => x.l)].join(" ").toLowerCase();
+}
+function filtered(){
+  const q = state.q.trim().toLowerCase();
+  const list = SCHOOLS.filter(s =>
+    (state.country === "all" || s.c === state.country) &&
+    (!q || q.split(/\s+/).every(w => haystack(s).includes(w))) &&
+    (!state.openOnly || nextDeadline(s))
+  );
+  const order = Object.keys(COUNTRIES);
+  if (state.sort === "deadline") list.sort((a,b) => sortKey(a) - sortKey(b) || a.name.localeCompare(b.name));
+  if (state.sort === "name") list.sort((a,b) => a.name.localeCompare(b.name));
+  if (state.sort === "country") list.sort((a,b) => order.indexOf(a.c) - order.indexOf(b.c) || sortKey(a) - sortKey(b));
+  return list;
+}
+function dlItems(s){
+  return s.dl.map(x => {
+    const st = status(x);
+    const date = x.d ? `${x.est ? '<span class="est">≈ </span>' : ""}${fmt(x.d)}` : esc(x.text || "");
+    const extra = x.est && st.cls !== "closed" ? ", өмнөх жилийн хуваариар" : "";
+    return `<li class="${st.cls}">
+      <span class="dl-label">${esc(x.l)}</span><span class="dl-date">${date}</span>
+      ${st.text ? `<span class="dl-status st-${st.cls}">${esc(st.text)}${extra}</span>` : ""}
+    </li>`;
+  }).join("");
+}
+function mailBlock(s){
+  if (!s.email) return `<div class="mail">${icon.mail}<span class="mail-none">${esc(s.contact || "Имэйл байхгүй")}</span></div>`;
+  return `<div class="mail">${icon.mail}<a href="mailto:${esc(s.email)}" title="${esc(s.email)}">${esc(s.email)}</a>
+    <button type="button" class="copy" data-copy="${esc(s.email)}" aria-label="${esc(s.email)} хаягийг хуулах">Хуулах</button></div>`;
+}
+const langOf = c => c === "cn" ? "zh" : c === "kr" ? "ko" : "ja";
+function ticket(s){
+  const c = COUNTRIES[s.c];
+  return `<article class="ticket" id="u-${s.id}" aria-labelledby="n-${s.id}">
+    <div class="t-main">
+      <div class="t-top">${flaps(c.code)}<div>
+        <h3 class="t-name" id="n-${s.id}">${esc(s.name)}</h3>
+        <p class="t-where">${esc(s.where)}, ${esc(c.name)}${s.local ? `<span lang="${langOf(s.c)}">${esc(s.local)}</span>` : ""}</p>
+      </div></div>
+      <p class="t-intro">${esc(s.intro)}</p>
+      ${s.mine ? `<p class="t-mine"><b>Миний тэмдэглэл:</b>${esc(s.mine)}</p>` : ""}
+      <p class="t-aid">${icon.aid}<span><span class="sr-only">Тэтгэлэг: </span>${esc(s.aid)}</span></p>
+      <dl class="t-tests">${s.tests.map(([k,v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
+    </div>
+    <div class="t-perf" aria-hidden="true"></div>
+    <div class="t-stub">
+      <h4>Эцсийн хугацаа</h4>
+      <ul class="dl">${dlItems(s)}</ul>
+      ${s.note ? `<p class="t-note">${esc(s.note)}</p>` : ""}
+      <div class="t-actions">
+        <a class="btn" href="${esc(s.web)}" target="_blank" rel="noopener">Албан ёсны сайт${icon.ext}${newTab}</a>
+        ${mailBlock(s)}
+      </div>
+    </div>
+  </article>`;
+}
+function row(s){
+  const c = COUNTRIES[s.c], nd = nextDeadline(s);
+  let next = `<span class="st-closed">Энэ жилийн хугацаа хаагдсан</span>`;
+  if (nd){
+    const st = status(nd);
+    next = `<div>${esc(nd.l)}</div><div class="tn">${nd.d ? (nd.est ? "≈ " : "") + fmt(nd.d) : esc(nd.text)}</div><div class="st-${st.cls}">${esc(st.text)}</div>`;
+  }
+  return `<tr>
+    <td><div class="tn">${esc(s.name)}</div><div class="tl">${esc(s.where)}, ${esc(c.name)}</div></td>
+    <td>${next}</td>
+    <td><div class="td-tests">${s.tests.map(([k,v]) => `<div><b>${esc(k)}:</b> ${esc(v)}</div>`).join("")}</div></td>
+    <td>${esc(s.aid)}</td>
+    <td>${s.email ? `<a href="mailto:${esc(s.email)}">${esc(s.email)}</a>` : esc(s.contact || "")}<br><a href="${esc(s.web)}" target="_blank" rel="noopener">Албан ёсны сайт${newTab}</a></td>
+  </tr>`;
+}
+function renderSchools(){
+  const list = filtered();
+  const label = state.country === "all" ? "" : ` (${COUNTRIES[state.country].name})`;
+  $("#result-line").innerHTML = list.length ? `<strong>${list.length}</strong> сургууль${esc(label)}` : "";
+  $("#empty").hidden = list.length > 0;
+  const cards = state.view === "cards";
+  $("#tickets").hidden = !cards || !list.length;
+  $("#table-wrap").hidden = cards || !list.length;
+  if (cards) $("#tickets").innerHTML = list.map(ticket).join("");
+  else $("#tbody").innerHTML = list.map(row).join("");
+}
+
+// текст хуулах (clipboard ажиллахгүй хөтөч дээр хуучин аргаар)
+async function copyText(text){
+  try { await navigator.clipboard.writeText(text); return true; }
+  catch(err){
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    let ok = false; try { ok = document.execCommand("copy"); } catch(_){}
+    ta.remove(); return ok;
+  }
+}
+document.addEventListener("click", async e => {
+  const b = e.target.closest(".copy"); if (!b) return;
+  await copyText(b.dataset.copy);
+  b.textContent = "Хуулсан"; b.classList.add("is-done");
+  setTimeout(() => { b.textContent = "Хуулах"; b.classList.remove("is-done"); }, 1600);
+});
+
+/* ----------------------------------------------------------------
+   холбоо барих
+   ---------------------------------------------------------------- */
+function renderSocials(){
+  const ig = `https://www.instagram.com/${ME.instagram}/`;
+  const items = [["Instagram", "@" + ME.instagram, ig], ["Facebook", ME.facebookName, ME.facebookUrl]];
+  $("#socials").innerHTML = items.map(([n,h,u]) =>
+    `<li><a href="${esc(u)}" target="_blank" rel="noopener"><span><span class="s-name">${n}</span><br><span class="s-handle">${esc(h)}</span></span>${icon.ext}${newTab}</a></li>`).join("");
+  $("#foot-socials").innerHTML = items.map(([n,h,u]) =>
+    `<li><a href="${esc(u)}" target="_blank" rel="noopener">${n}: ${esc(h)}${newTab}</a></li>`).join("") +
+    `<li><a href="#contact">Асуулт илгээх</a></li>`;
+}
+$("#contact-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const name = $("#f-name").value.trim();
+  const country = $("#f-country").value;
+  const msg = $("#f-msg").value.trim();
+  const err = $("#f-msg-err");
+  if (!msg){ err.hidden = false; $("#f-msg").setAttribute("aria-invalid", "true"); $("#f-msg").focus(); return; }
+  err.hidden = true; $("#f-msg").removeAttribute("aria-invalid");
+
+  const text = `Сайн уу, Juna! ${name ? "Би " + name + ". " : ""}Гарц сайтаас бичиж байна.\nСэдэв: ${country}\n\n${msg}`;
+  const copied = await copyText(text);
+  window.open(`https://ig.me/m/${ME.instagram}`, "_blank", "noopener");
+
+  const box = $("#form-status");
+  box.hidden = false;
+  box.innerHTML = copied
+    ? "Мессежийг чинь хуулчихлаа. Нээгдсэн Instagram чатад paste хийгээд илгээгээрэй. Удахгүй хариулна!"
+    : `Мессежийг автоматаар хуулж чадсангүй. Доорх текстийг хуулаад Instagram чатад илгээгээрэй.<textarea readonly>${esc(text)}</textarea>`;
+});
+$("#f-msg").addEventListener("input", () => { if ($("#f-msg").value.trim()) $("#f-msg-err").hidden = true; });
+
+/* ----------------------------------------------------------------
+   бүгдийг холбох
+   ---------------------------------------------------------------- */
+function syncCountryUI(){
+  $$("#gates .gate").forEach(g => g.setAttribute("aria-pressed", g.dataset.c === state.country));
+  $$("#chips .chip").forEach(ch => ch.setAttribute("aria-pressed", ch.dataset.c === state.country));
+}
+function selectCountry(k){
+  state.guide = k; state.country = k;
+  syncCountryUI(); renderGuide(); renderSchools();
+  history.replaceState(null, "", "#" + k);
+}
+function jumpTo(id){
+  if (!SCHOOLS.some(x => x.id === id)) return;
+  state.country = "all"; syncCountryUI();
+  state.q = ""; $("#q").value = ""; state.openOnly = false; $("#open-only").checked = false;
+  if (state.view !== "cards") setView("cards"); else renderSchools();
+  const el = document.getElementById("u-" + id);
+  el.scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block:"start"});
+  el.classList.remove("is-flash"); void el.offsetWidth; el.classList.add("is-flash");
+  el.setAttribute("tabindex", "-1"); el.focus({preventScroll:true});
+}
+function setView(v){
+  state.view = v;
+  $$(".seg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.view === v));
+  renderSchools();
+}
+
+let qTimer;
+$("#q").addEventListener("input", e => { clearTimeout(qTimer); qTimer = setTimeout(() => { state.q = e.target.value; renderSchools(); }, 120); });
+$("#open-only").addEventListener("change", e => { state.openOnly = e.target.checked; renderSchools(); });
+$("#sort").addEventListener("change", e => { state.sort = e.target.value; renderSchools(); });
+$$(".seg button").forEach(b => b.addEventListener("click", () => setView(b.dataset.view)));
+$("#clear").addEventListener("click", () => {
+  state.q = ""; $("#q").value = ""; state.openOnly = false; $("#open-only").checked = false; state.country = "all";
+  syncCountryUI(); renderSchools();
+});
+$("#board-all").addEventListener("click", () => {
+  state.sort = "deadline"; $("#sort").value = "deadline"; state.openOnly = true; $("#open-only").checked = true; renderSchools();
+});
+
+// утасны цэс
+const menuBtn = $("#menu-btn"), nav = $("#nav");
+menuBtn.addEventListener("click", () => {
+  const open = nav.classList.toggle("is-open");
+  menuBtn.setAttribute("aria-expanded", open);
+});
+$$("#nav a").forEach(a => a.addEventListener("click", () => { nav.classList.remove("is-open"); menuBtn.setAttribute("aria-expanded", "false"); }));
+document.addEventListener("keydown", e => { if (e.key === "Escape" && nav.classList.contains("is-open")){ nav.classList.remove("is-open"); menuBtn.setAttribute("aria-expanded", "false"); menuBtn.focus(); } });
+
+const head = $(".site-head");
+window.addEventListener("scroll", () => head.classList.toggle("is-scrolled", window.scrollY > 8), {passive:true});
+
+(function init(){
+  $("#checked-date").textContent = fmt(CHECKED);
+  $("#updated").textContent = fmt(CHECKED);
+  $("#year").textContent = new Date().getFullYear();
+  $("#lede").textContent = `Өргөдлөө бэлдэх явцдаа цуглуулсан бүхнээ энд нэгтгэлээ: алхам алхмаар заавар, ${SCHOOLS.length} сургуулийн эцсийн хугацаа, элсэлтийн албаны имэйл, шалгалтын шаардлага.`;
+  const fromHash = location.hash.slice(1);
+  if (COUNTRIES[fromHash]){ state.guide = fromHash; state.country = fromHash; }
+  renderGates(); renderBoard(); renderTabs(); renderChips(); renderGuide(); renderSchools(); renderSocials(); syncCountryUI();
+})();
+</script>
+</body>
+</html>
