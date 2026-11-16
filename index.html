@@ -1068,7 +1068,7 @@ function renderGuide(){
     checks[k] = [...set]; store.set("garts-checks", checks); updateMeter();
   }));
   $("#tips").innerHTML = c.tips.map(t => `<li>${esc(t)}</li>`).join("");
-  $("#links").innerHTML = c.links.map(([t,u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}${icon.ext}${newTab}</a></li>`).join("");
+  $("#links").innerHTML = c.links.map(([t,u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener" data-track="link-${state.guide}-${esc(new URL(u).hostname.replace(/^www\./,""))}" data-track-title="Холбоос: ${esc(t)}">${esc(t)}${icon.ext}${newTab}</a></li>`).join("");
   updateMeter();
 }
 function updateMeter(){
@@ -1122,8 +1122,8 @@ function dlItems(s){
 }
 function mailBlock(s){
   if (!s.email) return `<div class="mail">${icon.mail}<span class="mail-none">${esc(s.contact || "Имэйл байхгүй")}</span></div>`;
-  return `<div class="mail">${icon.mail}<a href="mailto:${esc(s.email)}" title="${esc(s.email)}">${esc(s.email)}</a>
-    <button type="button" class="copy" data-copy="${esc(s.email)}" aria-label="${esc(s.email)} хаягийг хуулах">Хуулах</button></div>`;
+  return `<div class="mail">${icon.mail}<a href="mailto:${esc(s.email)}" title="${esc(s.email)}" data-track="mail-${s.id}" data-track-title="Имэйл: ${esc(s.short || s.name)}">${esc(s.email)}</a>
+    <button type="button" class="copy" data-copy="${esc(s.email)}" data-track="mail-${s.id}" data-track-title="Имэйл: ${esc(s.short || s.name)}" aria-label="${esc(s.email)} хаягийг хуулах">Хуулах</button></div>`;
 }
 const langOf = c => c === "cn" ? "zh" : c === "kr" ? "ko" : "ja";
 function ticket(s){
@@ -1145,7 +1145,7 @@ function ticket(s){
       <ul class="dl">${dlItems(s)}</ul>
       ${s.note ? `<p class="t-note">${esc(s.note)}</p>` : ""}
       <div class="t-actions">
-        <a class="btn" href="${esc(s.web)}" target="_blank" rel="noopener">Албан ёсны сайт${icon.ext}${newTab}</a>
+        <a class="btn" href="${esc(s.web)}" target="_blank" rel="noopener" data-track="site-${s.id}" data-track-title="Албан ёсны сайт: ${esc(s.short || s.name)}">Албан ёсны сайт${icon.ext}${newTab}</a>
         ${mailBlock(s)}
       </div>
     </div>
@@ -1163,7 +1163,7 @@ function row(s){
     <td>${next}</td>
     <td><div class="td-tests">${s.tests.map(([k,v]) => `<div><b>${esc(k)}:</b> ${esc(v)}</div>`).join("")}</div></td>
     <td>${esc(s.aid)}</td>
-    <td>${s.email ? `<a href="mailto:${esc(s.email)}">${esc(s.email)}</a>` : esc(s.contact || "")}<br><a href="${esc(s.web)}" target="_blank" rel="noopener">Албан ёсны сайт${newTab}</a></td>
+    <td>${s.email ? `<a href="mailto:${esc(s.email)}" data-track="mail-${s.id}" data-track-title="Имэйл: ${esc(s.short || s.name)}">${esc(s.email)}</a>` : esc(s.contact || "")}<br><a href="${esc(s.web)}" target="_blank" rel="noopener" data-track="site-${s.id}" data-track-title="Албан ёсны сайт: ${esc(s.short || s.name)}">Албан ёсны сайт${newTab}</a></td>
   </tr>`;
 }
 function renderSchools(){
@@ -1197,15 +1197,30 @@ document.addEventListener("click", async e => {
 });
 
 /* ----------------------------------------------------------------
+   GoatCounter: аль товч, аль улсын заавар хэр их үзэгддэгийг тоолно.
+   Нэр, мессеж зэрэг хувийн мэдээлэл илгээхгүй, зөвхөн юу дарсныг.
+   ---------------------------------------------------------------- */
+function track(path, title){
+  try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({path, title, event:true}); } catch(_){}
+}
+const tracked = new Set();
+function trackOnce(path, title){ if (tracked.has(path)) return; tracked.add(path); track(path, title); }
+document.addEventListener("click", e => {
+  const el = e.target.closest("[data-track]");
+  if (el) track(el.dataset.track, el.dataset.trackTitle || el.dataset.track);
+});
+
+/* ----------------------------------------------------------------
    холбоо барих
    ---------------------------------------------------------------- */
 function renderSocials(){
   const ig = `https://www.instagram.com/${ME.instagram}/`;
   const items = [["Instagram", "@" + ME.instagram, ig], ["Facebook", ME.facebookName, ME.facebookUrl]];
+  const tr = n => `data-track="social-${n.toLowerCase()}" data-track-title="${n}"`;
   $("#socials").innerHTML = items.map(([n,h,u]) =>
-    `<li><a href="${esc(u)}" target="_blank" rel="noopener"><span><span class="s-name">${n}</span><br><span class="s-handle">${esc(h)}</span></span>${icon.ext}${newTab}</a></li>`).join("");
+    `<li><a href="${esc(u)}" target="_blank" rel="noopener" ${tr(n)}><span><span class="s-name">${n}</span><br><span class="s-handle">${esc(h)}</span></span>${icon.ext}${newTab}</a></li>`).join("");
   $("#foot-socials").innerHTML = items.map(([n,h,u]) =>
-    `<li><a href="${esc(u)}" target="_blank" rel="noopener">${n}: ${esc(h)}${newTab}</a></li>`).join("") +
+    `<li><a href="${esc(u)}" target="_blank" rel="noopener" ${tr(n)}>${n}: ${esc(h)}${newTab}</a></li>`).join("") +
     `<li><a href="#contact">Асуулт илгээх</a></li>`;
 }
 $("#contact-form").addEventListener("submit", async e => {
@@ -1219,6 +1234,7 @@ $("#contact-form").addEventListener("submit", async e => {
 
   const text = `Сайн уу, Juna! ${name ? "Би " + name + ". " : ""}Гарц сайтаас бичиж байна.\nСэдэв: ${country}\n\n${msg}`;
   const copied = await copyText(text);
+  track("feedback-sent", "Санал илгээсэн: " + country);
   window.open(`https://ig.me/m/${ME.instagram}`, "_blank", "noopener");
 
   const box = $("#form-status");
@@ -1237,6 +1253,7 @@ function syncCountryUI(){
   $$("#chips .chip").forEach(ch => ch.setAttribute("aria-pressed", ch.dataset.c === state.country));
 }
 function selectCountry(k){
+  if (state.guide !== k) trackOnce("guide-" + k, "Заавар: " + COUNTRIES[k].name);
   state.guide = k; state.country = k;
   syncCountryUI(); renderGuide(); renderSchools();
   history.replaceState(null, "", "#" + k);
@@ -1292,5 +1309,6 @@ window.addEventListener("scroll", () => head.classList.toggle("is-scrolled", win
   renderGates(); renderBoard(); renderTabs(); renderChips(); renderGuide(); renderSchools(); renderSocials(); syncCountryUI();
 })();
 </script>
+<script data-goatcounter="https://juna.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
